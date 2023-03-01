@@ -98,11 +98,11 @@ function DisplayPermissionStatus({
   permissionName: DeviceSelectorProps["permissionName"];
 }) {
   return state === "prompt" ? (
-    <p>Waiting for {permissionName} permission</p>
+    <p style={{ color: "#999" }}>Waiting for {permissionName} permission</p>
   ) : state === "granted" ? (
-    <p>Permission granted for {permissionName}!</p>
+    <p style={{ color: "green" }}>Permission granted for {permissionName}!</p>
   ) : (
-    <p>
+    <p style={{ color: "red" }}>
       Permission denied for {permissionName}, we're not able to access to your
       device... :sad:
     </p>
