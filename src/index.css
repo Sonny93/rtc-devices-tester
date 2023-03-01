@@ -21,7 +21,7 @@ button {
   background: #fff;
   padding: 10px;
   border: 1px solid #dadce0;
-  border-radius: 3px;
+  border-radius: 0.25em;
   transition: 0.15s;
 }
 
