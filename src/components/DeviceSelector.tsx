@@ -1,6 +1,6 @@
-import { ChangeEvent, useCallback, useEffect, useState } from "react";
-import { getDevices, getDevicesByKind } from "../lib/devices";
-import { getPermissions } from "../lib/permission";
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { getDevices, getDevicesByKind } from '../lib/devices';
+import { getPermissions } from '../lib/permission';
 
 interface DeviceSelectorProps {
   label: string;
@@ -18,14 +18,14 @@ export default function DeviceSelector({
   setValue,
 }: DeviceSelectorProps) {
   const [permissionState, setPermissionState] = useState<
-    PermissionStatus["state"] | undefined
+    PermissionStatus['state'] | undefined
   >(undefined);
 
   const [devices, setDevices] = useState<MediaDeviceInfo[] | undefined>(
     undefined
   );
   useEffect(() => {
-    if (permissionState !== "granted") {
+    if (permissionState !== 'granted') {
       return setDevices(undefined);
     }
 
@@ -40,12 +40,12 @@ export default function DeviceSelector({
   const init = useCallback(async () => {
     const query = await getPermissions(permissionName!.toLowerCase());
 
-    const isAudioDevice = permissionName!.toLowerCase() === "microphone";
+    const isAudioDevice = permissionName!.toLowerCase() === 'microphone';
 
     setPermissionState(query.state);
     checkAudioPermission(query.state, isAudioDevice);
 
-    query.addEventListener("change", ({ currentTarget }) => {
+    query.addEventListener('change', ({ currentTarget }) => {
       const state = (currentTarget as any).state; // TODO: Fix any type
 
       setPermissionState(state);
@@ -94,17 +94,17 @@ function DisplayPermissionStatus({
   state,
   permissionName,
 }: {
-  state: PermissionStatus["state"];
-  permissionName: DeviceSelectorProps["permissionName"];
+  state: PermissionStatus['state'];
+  permissionName: DeviceSelectorProps['permissionName'];
 }) {
-  return state === "prompt" ? (
+  return state === 'prompt' ? (
     <p className="legend">Waiting for {permissionName} permission</p>
-  ) : state === "granted" ? (
-    <p className="legend" style={{ color: "green" }}>
+  ) : state === 'granted' ? (
+    <p className="legend" style={{ color: 'green' }}>
       Permission granted for {permissionName}!
     </p>
   ) : (
-    <p className="legend" style={{ color: "red" }}>
+    <p className="legend" style={{ color: 'red' }}>
       Permission denied for {permissionName}, we're not able to access to your
       device... :sad:
     </p>
@@ -120,10 +120,10 @@ async function testRequestDevice(isAudioDevice: boolean = true) {
 }
 
 async function checkAudioPermission(
-  state: PermissionStatus["state"],
+  state: PermissionStatus['state'],
   isAudioDevice: boolean
 ) {
-  if (state === "prompt") {
+  if (state === 'prompt') {
     testRequestDevice(isAudioDevice);
   }
 }

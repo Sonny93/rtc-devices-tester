@@ -1,9 +1,9 @@
-import { createRef, useEffect, useMemo, useState } from "react";
+import { createRef, useEffect, useMemo, useState } from 'react';
 
-import DeviceSelector from "./components/DeviceSelector";
-import SettingToggler from "./components/SettingToggler";
+import DeviceSelector from './components/DeviceSelector';
+import SettingToggler from './components/SettingToggler';
 
-import "./App.css";
+import './App.css';
 
 function App() {
   const videoRef = createRef<HTMLVideoElement>();
@@ -26,12 +26,12 @@ function App() {
   >(undefined);
 
   const constraints = useMemo<MediaStreamConstraints>(() => {
-    const audio: MediaStreamConstraints["audio"] = currentMicrophone
+    const audio: MediaStreamConstraints['audio'] = currentMicrophone
       ? {
           deviceId: [currentMicrophone.deviceId],
         }
       : false;
-    const video: MediaStreamConstraints["video"] = currentCamera
+    const video: MediaStreamConstraints['video'] = currentCamera
       ? {
           deviceId: [currentCamera.deviceId],
           width: 1920,
@@ -113,15 +113,15 @@ function App() {
         <section className="video-wrapper">
           <div className="field">
             <video
-              style={flipVideo ? { transform: "scaleX(-1)" } : undefined}
+              style={flipVideo ? { transform: 'scaleX(-1)' } : undefined}
               onDoubleClick={() => videoRef.current?.requestFullscreen()}
               ref={videoRef}
               playsInline
               poster="/world.jpeg"
               // controls
             />
-            <p className="legend" style={{ textAlign: "center" }}>
-              {!stream ? "Where are you?" : "👀"}
+            <p className="legend" style={{ textAlign: 'center' }}>
+              {!stream ? 'Where are you?' : '👀'}
             </p>
           </div>
           {!stream ? (

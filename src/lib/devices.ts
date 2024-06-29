@@ -1,5 +1,5 @@
 export function getDevicesByKind(
-  deviceKind: MediaDeviceInfo["kind"],
+  deviceKind: MediaDeviceInfo['kind'],
   devices?: MediaDeviceInfo[]
 ) {
   return devices
