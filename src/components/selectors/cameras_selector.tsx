@@ -8,8 +8,6 @@ export default function CamerasSelector() {
     settings: { selected },
     changeSelectedDevice,
   } = useSettings();
-
-  console.log(selected.camera?.deviceId);
   return (
     <DeviceSelector
       type="camera"

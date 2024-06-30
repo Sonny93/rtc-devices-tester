@@ -5,8 +5,13 @@ import { Selector } from '@minimalstuff/ui';
 import { useCallback, useEffect, useState } from 'react';
 import Legend from '~/components/common/legend';
 import { Devices } from '~/contexts/devices_context';
+import useShouldCheckPermission from '~/hooks/use_should_check_permissions';
 import { capitalize } from '~/lib/string';
 import { getPermissions } from '../lib/permission';
+
+const Emoji = styled.span({
+  fontSize: '20px',
+});
 
 const PermissionGranted = styled(Legend)(({ theme }) => ({
   color: theme.colors.green.default,
@@ -34,6 +39,7 @@ export default function DeviceSelector({
   const [permissionState, setPermissionState] = useState<
     PermissionStatus['state'] | undefined
   >(undefined);
+  const shouldCheckPermission = useShouldCheckPermission();
 
   const init = useCallback(async () => {
     const query = await getPermissions(permissionName!.toLowerCase());
@@ -55,22 +61,29 @@ export default function DeviceSelector({
     onDeviceChange(devices.find((d) => d.deviceId === deviceId)!);
 
   useEffect(() => {
-    init();
-  }, [init]);
+    if (shouldCheckPermission) {
+      init();
+    }
+  }, [init, shouldCheckPermission]);
 
+  const showSelector = shouldCheckPermission
+    ? permissionState === 'granted'
+    : true;
   return (
     <div>
-      <Selector<MediaDeviceInfo['deviceId']>
-        label={capitalize(type)}
-        name={`selector-${type}`}
-        onChangeCallback={handleChangeDevice}
-        options={devices.map(({ label, deviceId }) => ({
-          label,
-          value: deviceId,
-        }))}
-        value={selectedDevice?.deviceId as never}
-        css={{ width: '100%' }}
-      />
+      {showSelector && (
+        <Selector<MediaDeviceInfo['deviceId']>
+          label={capitalize(type)}
+          name={`selector-${type}`}
+          onChangeCallback={handleChangeDevice}
+          options={devices.map(({ label, deviceId }) => ({
+            label,
+            value: deviceId,
+          }))}
+          value={selectedDevice?.deviceId as never}
+          css={{ width: '100%' }}
+        />
+      )}
       {permissionState && (
         <DisplayPermissionStatus
           state={permissionState}
@@ -89,16 +102,20 @@ function DisplayPermissionStatus({
   permissionName: DeviceSelectorProps['permissionName'];
 }) {
   return state === 'prompt' ? (
-    <Legend>Waiting for {permissionName} permission</Legend>
+    <Legend>
+      <Emoji>🤔</Emoji>
+      Waiting for {permissionName} permission
+    </Legend>
   ) : state === 'granted' ? (
     <PermissionGranted>
-      {' '}
+      <Emoji>😊</Emoji>
       Permission granted for {permissionName}!
     </PermissionGranted>
   ) : (
     <PermissionDenied>
+      <Emoji>🥺</Emoji>
       Permission denied for {permissionName}, we're not able to access to your
-      device... :sad:
+      device...
     </PermissionDenied>
   );
 }
