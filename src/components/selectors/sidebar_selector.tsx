@@ -8,7 +8,7 @@ import SpeakersSelector from '~/components/selectors/speakers_selector';
 import useShouldCheckPermission from '~/hooks/use_should_check_permissions';
 
 const Wrapper = styled.section(({ theme }) => ({
-  height: 'fit-content',
+  height: '337.5px',
   backgroundColor: theme.colors.secondary,
   padding: '1.5em',
   borderRadius: '0.75em',

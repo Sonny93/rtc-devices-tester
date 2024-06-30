@@ -16,22 +16,6 @@ a:hover {
   text-decoration: underline;
 }
 
-.App {
-  margin-top: 8em;
-  display: flex;
-  gap: 2em;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-
-main {
-  display: flex;
-  flex: 1;
-  gap: 3em;
-  justify-content: center;
-}
-
 section {
   width: 100%;
   display: flex;

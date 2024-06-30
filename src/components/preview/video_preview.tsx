@@ -7,12 +7,15 @@ import useStream from '~/hooks/stream/use_stream';
 import useSettings from '~/hooks/use_settings';
 
 const Video = styled.video<{ flip?: boolean }>(({ theme, flip }) => ({
-  height: '168.75px',
-  width: '300px',
+  width: '600px',
   borderRadius: '0.5em',
   boxShadow: theme.colors.boxShadow,
   objectFit: 'cover',
   transform: flip ? 'scaleX(-1)' : undefined,
+
+  [`@media (max-width: ${theme.medias.mobile})`]: {
+    width: '100%',
+  },
 }));
 
 export default function VideoPreview() {
@@ -43,7 +46,7 @@ export default function VideoPreview() {
   });
 
   return (
-    <div>
+    <div css={{ width: '100%' }}>
       <Video
         onDoubleClick={() => videoRef.current?.requestFullscreen()}
         ref={videoRef}
