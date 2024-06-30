@@ -1,41 +1,39 @@
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import { getDevices, getDevicesByKind } from '../lib/devices';
+/** @jsxImportSource @emotion/react */
+
+import styled from '@emotion/styled';
+import { Selector } from '@minimalstuff/ui';
+import { useCallback, useEffect, useState } from 'react';
+import Legend from '~/components/common/legend';
+import { Devices } from '~/contexts/devices_context';
+import { capitalize } from '~/lib/string';
 import { getPermissions } from '../lib/permission';
 
+const PermissionGranted = styled(Legend)(({ theme }) => ({
+  color: theme.colors.green.default,
+}));
+
+const PermissionDenied = styled(Legend)(({ theme }) => ({
+  color: theme.colors.red.default,
+}));
+
 interface DeviceSelectorProps {
-  label: string;
-  deviceKind: MediaDeviceKind;
-  permissionName?: string;
-  currentValue: MediaDeviceInfo | undefined;
-  setValue: (value: MediaDeviceInfo | undefined) => void;
+  type: 'camera' | 'microphone' | 'speaker';
+  devices: Devices;
+  permissionName: string;
+  selectedDevice: MediaDeviceInfo;
+  onDeviceChange: (device: MediaDeviceInfo) => void;
 }
 
 export default function DeviceSelector({
-  label,
-  deviceKind,
+  type,
   permissionName,
-  currentValue,
-  setValue,
+  devices,
+  selectedDevice,
+  onDeviceChange,
 }: DeviceSelectorProps) {
   const [permissionState, setPermissionState] = useState<
     PermissionStatus['state'] | undefined
   >(undefined);
-
-  const [devices, setDevices] = useState<MediaDeviceInfo[] | undefined>(
-    undefined
-  );
-  useEffect(() => {
-    if (permissionState !== 'granted') {
-      return setDevices(undefined);
-    }
-
-    getDevices()
-      .then((devices) => {
-        setDevices(getDevicesByKind(deviceKind, devices));
-        setValue(devices[0]);
-      })
-      .catch(console.error);
-  }, [deviceKind, permissionState, setValue]);
 
   const init = useCallback(async () => {
     const query = await getPermissions(permissionName!.toLowerCase());
@@ -53,33 +51,26 @@ export default function DeviceSelector({
     });
   }, [permissionName]);
 
+  const handleChangeDevice = (deviceId: MediaDeviceInfo['deviceId']) =>
+    onDeviceChange(devices.find((d) => d.deviceId === deviceId)!);
+
   useEffect(() => {
     init();
   }, [init]);
 
-  const handleChangeDevice = (event: ChangeEvent<HTMLSelectElement>) => {
-    const value = event.currentTarget.value;
-    const device = devices?.find((d) => d.deviceId === value);
-
-    setValue(device);
-  };
-
   return (
-    <div className="field">
-      <label htmlFor={`selector-${deviceKind}`}>{label}</label>
-      <select
-        value={currentValue?.deviceId}
-        onChange={handleChangeDevice}
-        name={`selector-${deviceKind}`}
-        id={`selector-${deviceKind}`}
-      >
-        {devices &&
-          devices.map((device, key) => (
-            <option key={key} value={device.deviceId}>
-              {device.label}
-            </option>
-          ))}
-      </select>
+    <div>
+      <Selector<MediaDeviceInfo['deviceId']>
+        label={capitalize(type)}
+        name={`selector-${type}`}
+        onChangeCallback={handleChangeDevice}
+        options={devices.map(({ label, deviceId }) => ({
+          label,
+          value: deviceId,
+        }))}
+        value={selectedDevice?.deviceId as never}
+        css={{ width: '100%' }}
+      />
       {permissionState && (
         <DisplayPermissionStatus
           state={permissionState}
@@ -98,16 +89,17 @@ function DisplayPermissionStatus({
   permissionName: DeviceSelectorProps['permissionName'];
 }) {
   return state === 'prompt' ? (
-    <p className="legend">Waiting for {permissionName} permission</p>
+    <Legend>Waiting for {permissionName} permission</Legend>
   ) : state === 'granted' ? (
-    <p className="legend" style={{ color: 'green' }}>
+    <PermissionGranted>
+      {' '}
       Permission granted for {permissionName}!
-    </p>
+    </PermissionGranted>
   ) : (
-    <p className="legend" style={{ color: 'red' }}>
+    <PermissionDenied>
       Permission denied for {permissionName}, we're not able to access to your
       device... :sad:
-    </p>
+    </PermissionDenied>
   );
 }
 
