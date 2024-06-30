@@ -21,7 +21,7 @@ const StreamContext = createContext<StreamContextProps>({
 
 function StreamContextProvider({ children }: PropsWithChildren) {
   const {
-    settings: { selected },
+    settings: { selected, shouldEnable },
   } = useSettings();
   const [stream, setStream] = useState<MediaStream | null>(null);
 
@@ -35,18 +35,25 @@ function StreamContextProvider({ children }: PropsWithChildren) {
   });
 
   const constraints = useMemo<MediaStreamConstraints>(() => {
-    const audio: MediaStreamConstraints['audio'] = selected.microphone
-      ? generateMicrophoneConstraints(selected.microphone)
-      : false;
-    const video: MediaStreamConstraints['video'] = selected.camera
-      ? generateVideoConstraints(selected.camera)
-      : false;
+    const audio: MediaStreamConstraints['audio'] =
+      selected.microphone && shouldEnable.microphone
+        ? generateMicrophoneConstraints(selected.microphone)
+        : false;
+    const video: MediaStreamConstraints['video'] =
+      selected.video && shouldEnable.video
+        ? generateVideoConstraints(selected.video)
+        : false;
 
     return {
       audio,
       video,
     };
-  }, [selected.camera, selected.microphone]);
+  }, [
+    selected.video,
+    selected.microphone,
+    shouldEnable.video,
+    shouldEnable.microphone,
+  ]);
 
   const startStream = useCallback(async () => {
     if (stream) return;

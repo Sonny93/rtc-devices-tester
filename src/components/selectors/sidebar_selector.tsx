@@ -2,7 +2,7 @@
 
 import styled from '@emotion/styled';
 import Legend from '~/components/common/legend';
-import CamerasSelector from '~/components/selectors/cameras_selector';
+import VideosSelector from '~/components/selectors/videos_selector';
 import MicrophonesSelector from '~/components/selectors/microphones_selector';
 import SpeakersSelector from '~/components/selectors/speakers_selector';
 import useShouldCheckPermission from '~/hooks/use_should_check_permissions';
@@ -20,12 +20,12 @@ export default function SidebarSelector() {
   return (
     <div>
       <Wrapper>
-        <CamerasSelector />
+        <VideosSelector />
         <MicrophonesSelector />
         <SpeakersSelector />
       </Wrapper>
       {!shouldCheckPermission && (
-        <Legend css={{ textAlign: 'center', marginTop: '2em' }}>
+        <Legend center css={{ marginTop: '2em' }}>
           When using 🦊 Firefox, devices and permissions are broken.
           <br />
           If you are experiencing a issue, try a Chromium-based browser.

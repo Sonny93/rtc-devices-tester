@@ -1,5 +1,9 @@
+/** @jsxImportSource @emotion/react */
+
 import styled from '@emotion/styled';
 import { Button, Checkbox, useThemeSwitcher } from '@minimalstuff/ui';
+import { useEffect } from 'react';
+import Legend from '~/components/common/legend';
 import Separator from '~/components/common/separator';
 import VideoPreview from '~/components/preview/video_preview';
 import { SettingsProps } from '~/contexts/settings_context';
@@ -27,23 +31,36 @@ export default function SidebarPreview() {
   const toggleSettings = (name: string, value: boolean) =>
     changeSettingsToggle(name as keyof SettingsProps['shouldEnable'], value);
 
+  const disabled = !shouldEnable.video && !shouldEnable.microphone;
+
+  useEffect(() => {
+    if (stream && disabled) {
+      stopStream();
+    }
+  }, [disabled, stopStream, stream]);
+
   return (
     <SidebarPreviewWrapper>
       <VideoPreview />
-      {!stream ? (
-        <Button type="button" onClick={startStream}>
-          Test devices
-        </Button>
-      ) : (
-        <Button type="button" onClick={stopStream}>
-          Stop testing
-        </Button>
-      )}
+      <div css={{ width: '100%' }}>
+        {!stream ? (
+          <Button type="button" onClick={startStream} disabled={disabled}>
+            Test devices
+          </Button>
+        ) : (
+          <Button type="button" onClick={stopStream}>
+            Stop testing
+          </Button>
+        )}
+        {disabled && (
+          <Legend center>At least a video nor a microphone is required</Legend>
+        )}
+      </div>
       <Checkbox
         label="Enable video"
         name="video"
         onChange={toggleSettings}
-        checked={shouldEnable.camera}
+        checked={shouldEnable.video}
         inline
         reverse
       />

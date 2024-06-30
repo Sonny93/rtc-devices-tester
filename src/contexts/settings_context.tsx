@@ -1,6 +1,6 @@
 import { PropsWithChildren, createContext, useState } from 'react';
 import store from 'store2';
-import useCameras from '~/hooks/devices/use_cameras';
+import useVideos from '~/hooks/devices/use_videos';
 import useMicrophones from '~/hooks/devices/use_microphones';
 import useSpeakers from '~/hooks/devices/use_speakers';
 
@@ -9,12 +9,12 @@ const LS_SHOULD_ENABLE = 'should_enable_';
 export type SettingsProps = {
   shouldEnable: {
     microphone: boolean;
-    camera: boolean;
+    video: boolean;
     speaker: boolean;
   };
   selected: {
     microphone: MediaDeviceInfo | null;
-    camera: MediaDeviceInfo | null;
+    video: MediaDeviceInfo | null;
     speaker: MediaDeviceInfo | null;
   };
   flipVideo: boolean;
@@ -33,12 +33,12 @@ type ChangeSelectedCallback = (
 const SettingsContextDefaultValue: SettingsProps = {
   shouldEnable: {
     microphone: true,
-    camera: true,
+    video: true,
     speaker: false,
   },
   selected: {
     microphone: null,
-    camera: null,
+    video: null,
     speaker: null,
   },
   flipVideo: false,
@@ -55,18 +55,18 @@ const SettingsContext = createContext<{
 });
 
 function SettingsContextProvider({ children }: PropsWithChildren) {
-  const cameras = useCameras();
-  const micros = useMicrophones();
+  const videos = useVideos();
+  const microphones = useMicrophones();
   const speakers = useSpeakers();
 
   const [settings, setSettings] = useState<SettingsProps>(() => ({
     selected: {
-      camera: cameras?.[0] ?? null,
-      microphone: micros?.[0] ?? null,
+      video: videos?.[0] ?? null,
+      microphone: microphones?.[0] ?? null,
       speaker: speakers?.[0] ?? null,
     },
     shouldEnable: {
-      camera: store(LS_SHOULD_ENABLE + 'video'),
+      video: store(LS_SHOULD_ENABLE + 'video'),
       microphone: store(LS_SHOULD_ENABLE + 'microphone'),
       speaker: store(LS_SHOULD_ENABLE + 'speaker'),
     },

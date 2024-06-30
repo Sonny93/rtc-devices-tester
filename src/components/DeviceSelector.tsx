@@ -22,7 +22,7 @@ const PermissionDenied = styled(Legend)(({ theme }) => ({
 }));
 
 interface DeviceSelectorProps {
-  type: 'camera' | 'microphone' | 'speaker';
+  type: 'video' | 'microphone' | 'speaker';
   devices: Devices;
   permissionName: string;
   selectedDevice: MediaDeviceInfo;
