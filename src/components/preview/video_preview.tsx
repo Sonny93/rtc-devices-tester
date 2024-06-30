@@ -12,7 +12,8 @@ const LS_USER_VOLUME = 'user_volume';
 const DEFAULT_SPEAKER_VOLUME = 0.3;
 
 const Video = styled.video<{ flip?: boolean }>(({ theme, flip }) => ({
-  width: '600px',
+  height: '334px',
+  width: 'auto',
   aspectRatio: '16 /9',
   borderRadius: '0.5em',
   boxShadow: theme.colors.boxShadow,
@@ -21,6 +22,7 @@ const Video = styled.video<{ flip?: boolean }>(({ theme, flip }) => ({
   overflow: 'hidden',
 
   [`@media (max-width: ${theme.medias.mobile})`]: {
+    height: 'auto',
     width: '100%',
   },
 }));

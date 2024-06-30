@@ -1,11 +1,10 @@
-/** @jsxImportSource @emotion/react */
-
 import styled from '@emotion/styled';
-import { Button, Checkbox, useThemeSwitcher } from '@minimalstuff/ui';
+import { Checkbox, useThemeSwitcher } from '@minimalstuff/ui';
 import { useEffect } from 'react';
-import Legend from '~/components/common/legend';
 import Separator from '~/components/common/separator';
+import StreamButton from '~/components/preview/stream_button';
 import VideoPreview from '~/components/preview/video_preview';
+import SettingsToggler from '~/components/settings/settings_toggler';
 import { SettingsProps } from '~/contexts/settings_context';
 import useStream from '~/hooks/stream/use_stream';
 import useSettings from '~/hooks/use_settings';
@@ -20,15 +19,19 @@ const SidebarPreviewWrapper = styled.section({
   flexDirection: 'column',
 });
 
+type ToggleSettings = (name: string, value: boolean) => void;
+
+export type SettingsTogglerProps = { toggleSettings: ToggleSettings };
+
 export default function SidebarPreview() {
-  const { stream, startStream, stopStream } = useStream();
+  const { stream, stopStream } = useStream();
   const {
     settings: { shouldEnable, flipVideo },
     changeSettingsToggle,
   } = useSettings();
   const { isDarkTheme, toggleDarkTheme } = useThemeSwitcher();
 
-  const toggleSettings = (name: string, value: boolean) =>
+  const toggleSettings: ToggleSettings = (name, value) =>
     changeSettingsToggle(name as keyof SettingsProps['shouldEnable'], value);
 
   const disabled = !shouldEnable.video && !shouldEnable.microphone;
@@ -42,44 +45,10 @@ export default function SidebarPreview() {
   return (
     <SidebarPreviewWrapper>
       <VideoPreview />
-      <div css={{ width: '100%' }}>
-        {!stream ? (
-          <Button type="button" onClick={startStream} disabled={disabled}>
-            Test devices
-          </Button>
-        ) : (
-          <Button type="button" onClick={stopStream}>
-            Stop testing
-          </Button>
-        )}
-        {disabled && (
-          <Legend center>At least a video nor a microphone is required</Legend>
-        )}
-      </div>
-      <Checkbox
-        label="Enable video"
-        name="video"
-        onChange={toggleSettings}
-        checked={shouldEnable.video}
-        inline
-        reverse
-      />
-      <Checkbox
-        label="Enable microphone"
-        name="microphone"
-        onChange={toggleSettings}
-        checked={shouldEnable.microphone}
-        inline
-        reverse
-      />
-      <Checkbox
-        label="Enable speaker"
-        name="speaker"
-        onChange={toggleSettings}
-        checked={shouldEnable.speaker}
-        inline
-        reverse
-      />
+      <StreamButton />
+      <SettingsToggler toggleSettings={toggleSettings} type="video" />
+      <SettingsToggler toggleSettings={toggleSettings} type="microphone" />
+      <SettingsToggler toggleSettings={toggleSettings} type="speaker" />
       <Checkbox
         label="Flip video"
         name="flip-video"
@@ -87,7 +56,6 @@ export default function SidebarPreview() {
         checked={flipVideo}
         inline
         reverse
-        style={{ gap: '1em' }}
       />
       <Separator />
       <Checkbox

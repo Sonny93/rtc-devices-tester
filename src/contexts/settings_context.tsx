@@ -6,27 +6,25 @@ import useSpeakers from '~/hooks/devices/use_speakers';
 
 const LS_SHOULD_ENABLE = 'should_enable_';
 
+export type DeviceType = 'microphone' | 'video' | 'speaker';
+
 export type SettingsProps = {
   shouldEnable: {
-    microphone: boolean;
-    video: boolean;
-    speaker: boolean;
+    [device in DeviceType]: boolean;
   };
   selected: {
-    microphone: MediaDeviceInfo | null;
-    video: MediaDeviceInfo | null;
-    speaker: MediaDeviceInfo | null;
+    [device in DeviceType]: MediaDeviceInfo | null;
   };
   flipVideo: boolean;
 };
 
 type ToggleSettingsCallback = (
-  name: keyof SettingsProps['shouldEnable'] | 'flipVideo',
+  name: DeviceType | 'flipVideo',
   value: boolean
 ) => void;
 
 type ChangeSelectedCallback = (
-  device: keyof SettingsProps['selected'],
+  device: DeviceType,
   value: MediaDeviceInfo
 ) => void;
 
