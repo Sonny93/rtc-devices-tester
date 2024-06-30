@@ -1,7 +1,10 @@
 import { PropsWithChildren, createContext, useState } from 'react';
+import store from 'store2';
 import useCameras from '~/hooks/devices/use_cameras';
 import useMicrophones from '~/hooks/devices/use_microphones';
 import useSpeakers from '~/hooks/devices/use_speakers';
+
+const LS_SHOULD_ENABLE = 'should_enable_';
 
 export type SettingsProps = {
   shouldEnable: {
@@ -57,12 +60,17 @@ function SettingsContextProvider({ children }: PropsWithChildren) {
   const speakers = useSpeakers();
 
   const [settings, setSettings] = useState<SettingsProps>(() => ({
-    ...SettingsContextDefaultValue,
     selected: {
       camera: cameras?.[0] ?? null,
       microphone: micros?.[0] ?? null,
       speaker: speakers?.[0] ?? null,
     },
+    shouldEnable: {
+      camera: store(LS_SHOULD_ENABLE + 'video'),
+      microphone: store(LS_SHOULD_ENABLE + 'microphone'),
+      speaker: store(LS_SHOULD_ENABLE + 'speaker'),
+    },
+    flipVideo: store(LS_SHOULD_ENABLE + 'flipVideo'),
   }));
 
   const changeSettingsToggle: ToggleSettingsCallback = (name, value) =>
@@ -73,6 +81,7 @@ function SettingsContextProvider({ children }: PropsWithChildren) {
       } else {
         newSettings['shouldEnable'][name] = value;
       }
+      store(LS_SHOULD_ENABLE + name, value);
       return newSettings;
     });
 
