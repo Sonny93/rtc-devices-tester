@@ -1,4 +1,4 @@
-import DeviceSelector from '~/components/DeviceSelector';
+import DeviceSelector from '~/components/selectors/device_selector';
 import useSpeakers from '~/hooks/devices/use_speakers';
 import useSettings from '~/hooks/use_settings';
 

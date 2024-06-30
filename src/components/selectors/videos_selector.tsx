@@ -1,4 +1,4 @@
-import DeviceSelector from '~/components/DeviceSelector';
+import DeviceSelector from '~/components/selectors/device_selector';
 import useVideos from '~/hooks/devices/use_videos';
 import useSettings from '~/hooks/use_settings';
 
