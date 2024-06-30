@@ -1,7 +1,6 @@
-export async function getPermissions(permissionName = '') {
+export async function getPermissions(permissionName: string = '') {
   const permissions = await navigator.permissions.query({
-    // @ts-ignore
-    name: permissionName,
+    name: permissionName as PermissionName,
   });
   return permissions;
 }

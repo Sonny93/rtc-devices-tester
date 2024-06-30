@@ -9,6 +9,5 @@ export function getDevicesByKind(
 
 export async function getDevices() {
   const devices = await navigator.mediaDevices.enumerateDevices();
-
   return devices;
 }
