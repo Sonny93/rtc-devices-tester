@@ -1,4 +1,5 @@
 import { PropsWithChildren, createContext, useEffect, useState } from 'react';
+import Loader from '~/components/common/loader';
 import { getDevices } from '~/lib/devices';
 
 export type Devices = MediaDeviceInfo[];
@@ -20,7 +21,7 @@ function DevicesContextProvider({ children }: PropsWithChildren) {
 
   return (
     <DevicesContext.Provider value={{ devices }}>
-      {loading ? 'Loading devices...' : children}
+      {loading ? <Loader /> : children}
     </DevicesContext.Provider>
   );
 }
