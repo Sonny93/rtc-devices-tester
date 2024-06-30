@@ -1,4 +1,5 @@
 import 'react-toggle/style.css';
+import Footer from '~/components/common/footer';
 import SidebarPreview from '~/components/preview/sidebar_preview';
 import SidebarSelector from '~/components/selectors/sidebar_selector';
 import './App.css';
@@ -10,6 +11,7 @@ const App = () => (
       <SidebarSelector />
       <SidebarPreview />
     </main>
+    <Footer />
   </div>
 );
 export default App;

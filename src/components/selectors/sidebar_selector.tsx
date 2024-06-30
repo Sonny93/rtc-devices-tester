@@ -8,6 +8,7 @@ const Wrapper = styled.section(({ theme }) => ({
   backgroundColor: theme.colors.secondary,
   padding: '1.5em',
   borderRadius: '0.75em',
+  boxShadow: theme.colors.boxShadow,
 }));
 
 const SidebarSelector = () => (

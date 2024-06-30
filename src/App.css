@@ -6,6 +6,16 @@
   padding: 0;
 }
 
+#root {
+  display: flex;
+  flex: 1;
+  padding: 1em;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
 .App {
   margin-top: 8em;
   display: flex;
@@ -17,6 +27,7 @@
 
 main {
   display: flex;
+  flex: 1;
   gap: 3em;
   justify-content: center;
 }
