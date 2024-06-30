@@ -1,6 +1,6 @@
 {
   "name": "rtc-devices-tester",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "type": "module",
   "scripts": {
     "prepare": "husky",
@@ -8,8 +8,7 @@
     "build": "tsc && vite build",
     "serve": "vite preview",
     "format": "prettier --write --parser typescript '**/*.{ts,tsx}'",
-    "lint": "eslint . --ext .ts,.tsx --report-unused-disable-directives --max-warnings 0",
-    "release": "release-it --ci --only-version"
+    "lint": "eslint . --ext .ts,.tsx --report-unused-disable-directives --max-warnings 0"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
@@ -34,7 +33,6 @@
     "husky": "^9.0.11",
     "lint-staged": "^15.2.7",
     "prettier": "^3.3.2",
-    "release-it": "^17.4.0",
     "vite-plugin-eslint": "^1.8.1"
   },
   "volta": {
