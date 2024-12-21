@@ -3,7 +3,7 @@ import Footer from '~/components/common/footer';
 import { ThemeSwitcher } from '~/components/common/theme_switcher';
 import SidebarPreview from '~/components/preview/sidebar_preview';
 import SidebarSelector from '~/components/selectors/sidebar_selector';
-import './App.css';
+import './app.css';
 
 const App = () => (
   <Stack gap="lg">
