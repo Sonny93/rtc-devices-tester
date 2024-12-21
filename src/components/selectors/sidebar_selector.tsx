@@ -1,4 +1,4 @@
-import { Box, Checkbox, Stack, Text } from '@mantine/core';
+import { Box, Stack, Switch, Text } from '@mantine/core';
 import StreamButton from '~/components/preview/stream_button';
 import MicrophonesSelector from '~/components/selectors/microphones_selector';
 import SpeakersSelector from '~/components/selectors/speakers_selector';
@@ -19,12 +19,16 @@ export default function SidebarSelector() {
         <VideosSelector />
         <MicrophonesSelector />
         <SpeakersSelector />
-        <Checkbox
-          label="Flip video"
+        <Switch
+          label={<Text fw={500}>Flip video</Text>}
           name="flip-video"
           onChange={(event) =>
             changeSettingsToggle('flipVideo', event.target.checked)
           }
+          labelPosition="left"
+          size="md"
+          onLabel="ON"
+          offLabel="OFF"
           checked={flipVideo}
         />
         <StreamButton />

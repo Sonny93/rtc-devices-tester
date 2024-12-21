@@ -12,7 +12,7 @@ const DEFAULT_SPEAKER_VOLUME = 0.3;
 export default function VideoPreview() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const {
-    settings: { shouldEnable, selected },
+    settings: { shouldEnable, selected, flipVideo },
   } = useSettings();
   const { stream } = useStream();
 
@@ -48,6 +48,7 @@ export default function VideoPreview() {
             boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
             objectFit: 'cover',
             overflow: 'hidden',
+            transform: flipVideo ? 'scaleX(-1)' : 'none',
           }}
           onDoubleClick={() => videoRef.current?.requestFullscreen()}
           onVolumeChange={({ currentTarget }) =>

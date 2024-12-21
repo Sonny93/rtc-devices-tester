@@ -53,6 +53,7 @@ export default function DeviceSelector({
           onLabel="ON"
           offLabel="OFF"
           disabled={isErrored}
+          size="md"
         />
       }
       name={`selector-${type}`}
@@ -69,6 +70,7 @@ export default function DeviceSelector({
       }
       disabled={isDisabled}
       placeholder={isErrored ? 'No device available' : 'Loading devices...'}
+      size="md"
     />
   );
 }

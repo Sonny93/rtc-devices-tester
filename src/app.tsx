@@ -1,4 +1,4 @@
-import { Grid, Group, Stack } from '@mantine/core';
+import { Grid, Group, Stack, Title } from '@mantine/core';
 import Footer from '~/components/common/footer';
 import { ThemeSwitcher } from '~/components/common/theme_switcher';
 import SidebarPreview from '~/components/preview/sidebar_preview';
@@ -8,7 +8,7 @@ import './app.css';
 const App = () => (
   <Stack gap="lg">
     <Group justify="space-between">
-      <h1>RTC Devices Tester</h1>
+      <Title order={1}>RTC Devices Tester</Title>
       <ThemeSwitcher />
     </Group>
     <Grid>

@@ -3,21 +3,19 @@ import { Anchor, Group, Text } from '@mantine/core';
 import ExternalLink from '~/components/common/external_link';
 
 const Footer = () => (
-  <Group>
-    <Text>Made with ❤️ by</Text>{' '}
-    <Anchor component={ExternalLink} href="https://www.sonny.dev/">
+  <Group gap={4} c="dimmed" justify="center" mt="auto">
+    <Text size="sm">Made with ❤️ by</Text>{' '}
+    <Anchor size="sm" component={ExternalLink} href="https://www.sonny.dev/">
       Sonny
     </Anchor>
     {' • '}
-    <Text>
-      Version:{' '}
-      <Anchor
-        component={ExternalLink}
-        href="https://github.com/Sonny93/rtc-devices-tester"
-      >
-        {packageJson.version}
-      </Anchor>
-    </Text>
+    <Anchor
+      size="sm"
+      component={ExternalLink}
+      href="https://github.com/Sonny93/rtc-devices-tester"
+    >
+      {packageJson.version}
+    </Anchor>
   </Group>
 );
 export default Footer;
