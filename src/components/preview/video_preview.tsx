@@ -41,8 +41,8 @@ export default function VideoPreview() {
         <Visualizer />
         <video
           style={{
-            height: '334px',
-            width: 'auto',
+            height: 'auto',
+            width: '100%',
             aspectRatio: '16 /9',
             borderRadius: '0.5em',
             boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
