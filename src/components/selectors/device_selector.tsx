@@ -34,7 +34,8 @@ export default function DeviceSelector({
     }
   }, [permissionState, shouldCheckPermission, stopStream, stream]);
 
-  const isDisabled = permissionState !== 'granted' || !devices.length;
+  const isDisabled = permissionState !== 'granted';
+  const isErrored = permissionState === 'denied' || !devices.length;
   return (
     <Select
       label={capitalize(type)}
@@ -46,11 +47,12 @@ export default function DeviceSelector({
       }))}
       value={selectedDevice?.deviceId as never}
       error={
-        isDisabled &&
+        isErrored &&
         `${capitalize(permissionName)} permission denied, we're not able to access
       to your device 🥺`
       }
       disabled={isDisabled}
+      placeholder={isErrored ? 'No device available' : 'Loading devices...'}
     />
   );
 }

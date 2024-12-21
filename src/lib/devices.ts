@@ -7,14 +7,21 @@ export function getDevicesByKind(
     : undefined;
 }
 
+async function testAndKillMedia(kind: 'audio' | 'video') {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      [kind]: true,
+    });
+    stream.getTracks().forEach((track) => track.stop());
+  } catch (_) {
+    // We don't care about errors here.
+  }
+}
+
+// We have to get stream in order to get labels
+// for devices because firefox sucks.
 export async function getDevices() {
-  // We have to get stream in order to get labels
-  // for devices because firefox sucks.
-  const stream = await navigator.mediaDevices.getUserMedia({
-    audio: true,
-    video: true,
-  });
-  const devices = await navigator.mediaDevices.enumerateDevices();
-  stream.getTracks().forEach((track) => track.stop());
-  return devices;
+  await testAndKillMedia('audio');
+  await testAndKillMedia('video');
+  return await navigator.mediaDevices.enumerateDevices();
 }
