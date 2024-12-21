@@ -1,22 +1,23 @@
 import packageJson from '@/package.json';
-import styled from '@emotion/styled';
-import { ExternalLink } from '@minimalstuff/ui';
-
-const FooterStyle = styled.footer(({ theme }) => ({
-  color: theme.colors.grey.default,
-}));
+import { Anchor, Group, Text } from '@mantine/core';
+import ExternalLink from '~/components/common/external_link';
 
 const Footer = () => (
-  <FooterStyle>
-    Made with ❤️ by{' '}
-    <ExternalLink href="https://www.sonny.dev/">Sonny</ExternalLink>
+  <Group>
+    <Text>Made with ❤️ by</Text>{' '}
+    <Anchor component={ExternalLink} href="https://www.sonny.dev/">
+      Sonny
+    </Anchor>
     {' • '}
-    <span>
+    <Text>
       Version:{' '}
-      <ExternalLink href="https://github.com/Sonny93/rtc-devices-tester">
+      <Anchor
+        component={ExternalLink}
+        href="https://github.com/Sonny93/rtc-devices-tester"
+      >
         {packageJson.version}
-      </ExternalLink>
-    </span>
-  </FooterStyle>
+      </Anchor>
+    </Text>
+  </Group>
 );
 export default Footer;

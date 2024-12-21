@@ -22,3 +22,7 @@ section {
   gap: 1em;
   flex-direction: column;
 }
+
+.emoji {
+  font-size: 20px;
+}

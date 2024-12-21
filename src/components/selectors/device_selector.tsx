@@ -1,6 +1,5 @@
-import { Selector } from '@minimalstuff/ui';
+import { Select } from '@mantine/core';
 import { useEffect } from 'react';
-import DisplayPermissionStatus from '~/components/permissions/display_permission_status';
 import { Devices } from '~/contexts/devices_context';
 import usePermissions from '~/hooks/permissions/use_permissions';
 import useStream from '~/hooks/stream/use_stream';
@@ -35,29 +34,23 @@ export default function DeviceSelector({
     }
   }, [permissionState, shouldCheckPermission, stopStream, stream]);
 
-  const showSelector = shouldCheckPermission
-    ? permissionState === 'granted'
-    : true;
+  const isDisabled = permissionState !== 'granted' || !devices.length;
   return (
-    <div>
-      {showSelector && (
-        <Selector<MediaDeviceInfo['deviceId']>
-          label={capitalize(type)}
-          name={`selector-${type}`}
-          onChangeCallback={handleChangeDevice}
-          options={devices.map(({ label, deviceId }) => ({
-            label,
-            value: deviceId,
-          }))}
-          value={selectedDevice?.deviceId as never}
-        />
-      )}
-      {permissionState && (
-        <DisplayPermissionStatus
-          state={permissionState}
-          permissionName={permissionName}
-        />
-      )}
-    </div>
+    <Select
+      label={capitalize(type)}
+      name={`selector-${type}`}
+      onChange={(value) => handleChangeDevice(value!)}
+      data={devices.map(({ label, deviceId }) => ({
+        label,
+        value: deviceId,
+      }))}
+      value={selectedDevice?.deviceId as never}
+      error={
+        isDisabled &&
+        `${capitalize(permissionName)} permission denied, we're not able to access
+      to your device 🥺`
+      }
+      disabled={isDisabled}
+    />
   );
 }

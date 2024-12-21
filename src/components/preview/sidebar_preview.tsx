@@ -1,23 +1,11 @@
-import styled from '@emotion/styled';
-import { Checkbox, useThemeSwitcher } from '@minimalstuff/ui';
+import { Checkbox, Divider, Flex, useMantineColorScheme } from '@mantine/core';
 import { useEffect } from 'react';
-import Separator from '~/components/common/separator';
 import StreamButton from '~/components/preview/stream_button';
 import VideoPreview from '~/components/preview/video_preview';
 import SettingsToggler from '~/components/settings/settings_toggler';
 import { SettingsProps } from '~/contexts/settings_context';
 import useStream from '~/hooks/stream/use_stream';
 import useSettings from '~/hooks/use_settings';
-
-const SidebarPreviewWrapper = styled.section({
-  height: '100%',
-  width: '100%',
-  display: 'flex',
-  flex: 1,
-  justifycontent: 'center',
-  alignItems: 'flex-start',
-  flexDirection: 'column',
-});
 
 type ToggleSettings = (name: string, value: boolean) => void;
 
@@ -29,7 +17,7 @@ export default function SidebarPreview() {
     settings: { shouldEnable, flipVideo },
     changeSettingsToggle,
   } = useSettings();
-  const { isDarkTheme, toggleDarkTheme } = useThemeSwitcher();
+  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
 
   const toggleSettings: ToggleSettings = (name, value) =>
     changeSettingsToggle(name as keyof SettingsProps['shouldEnable'], value);
@@ -43,7 +31,15 @@ export default function SidebarPreview() {
   }, [disabled, stopStream, stream]);
 
   return (
-    <SidebarPreviewWrapper>
+    <Flex
+      h="100%"
+      w="100%"
+      flex={1}
+      gap="xs"
+      justify="center"
+      align="flex-start"
+      direction="column"
+    >
       <VideoPreview />
       <StreamButton />
       <SettingsToggler toggleSettings={toggleSettings} type="video" />
@@ -52,20 +48,18 @@ export default function SidebarPreview() {
       <Checkbox
         label="Flip video"
         name="flip-video"
-        onChange={(_, checked) => changeSettingsToggle('flipVideo', checked)}
+        onChange={(event) =>
+          changeSettingsToggle('flipVideo', event.target.checked)
+        }
         checked={flipVideo}
-        inline
-        reverse
       />
-      <Separator />
+      <Divider w="100%" />
       <Checkbox
         label="Dark theme"
         name="theme-switcher"
-        onChange={(_, checked) => toggleDarkTheme(checked)}
-        checked={isDarkTheme}
-        inline
-        reverse
+        onChange={toggleColorScheme}
+        checked={colorScheme === 'dark'}
       />
-    </SidebarPreviewWrapper>
+    </Flex>
   );
 }

@@ -1,4 +1,4 @@
-import { Checkbox } from '@minimalstuff/ui';
+import { Checkbox } from '@mantine/core';
 import { SettingsTogglerProps } from '~/components/preview/sidebar_preview';
 import { DeviceType } from '~/contexts/settings_context';
 import usePermissions from '~/hooks/permissions/use_permissions';
@@ -18,10 +18,8 @@ export default function SettingsToggler({
     <Checkbox
       label={`Enable ${type}`}
       name={type}
-      onChange={toggleSettings}
+      onChange={(event) => toggleSettings(type, event.currentTarget.checked)}
       checked={shouldEnable[type]}
-      inline
-      reverse
       disabled={permissionState !== 'granted' && shouldCheckPermission}
     />
   );

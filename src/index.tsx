@@ -1,4 +1,5 @@
-import { ThemeContextProvider } from '@minimalstuff/ui';
+import { MantineProvider } from '@mantine/core';
+import '@mantine/core/styles.css';
 import ReactDOM from 'react-dom/client';
 import { DevicesContextProvider } from '~/contexts/devices_context';
 import { SettingsContextProvider } from '~/contexts/settings_context';
@@ -9,7 +10,7 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <ThemeContextProvider>
+  <MantineProvider>
     <DevicesContextProvider>
       <SettingsContextProvider>
         <StreamContextProvider>
@@ -17,5 +18,5 @@ root.render(
         </StreamContextProvider>
       </SettingsContextProvider>
     </DevicesContextProvider>
-  </ThemeContextProvider>
+  </MantineProvider>
 );

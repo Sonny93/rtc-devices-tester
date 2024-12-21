@@ -1,5 +1,5 @@
+import { LoadingOverlay } from '@mantine/core';
 import { PropsWithChildren, createContext, useEffect, useState } from 'react';
-import Loader from '~/components/common/loader';
 import { getDevices } from '~/lib/devices';
 
 export type Devices = MediaDeviceInfo[];
@@ -20,9 +20,10 @@ function DevicesContextProvider({ children }: PropsWithChildren) {
   }, []);
 
   return (
-    <DevicesContext.Provider value={{ devices }}>
-      {loading ? <Loader /> : children}
-    </DevicesContext.Provider>
+    <DevicesContext value={{ devices }}>
+      <LoadingOverlay visible={loading} zIndex={1000} />
+      {!loading && children}
+    </DevicesContext>
   );
 }
 

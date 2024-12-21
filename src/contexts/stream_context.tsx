@@ -71,9 +71,9 @@ function StreamContextProvider({ children }: PropsWithChildren) {
   }, [stream]);
 
   return (
-    <StreamContext.Provider value={{ stream, startStream, stopStream }}>
+    <StreamContext value={{ stream, startStream, stopStream }}>
       {children}
-    </StreamContext.Provider>
+    </StreamContext>
   );
 }
 

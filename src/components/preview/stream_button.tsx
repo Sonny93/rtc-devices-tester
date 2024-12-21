@@ -1,7 +1,4 @@
-/** @jsxImportSource @emotion/react */
-
-import { Button } from '@minimalstuff/ui';
-import Legend from '~/components/common/legend';
+import { Button, Text } from '@mantine/core';
 import useStream from '~/hooks/stream/use_stream';
 import useSettings from '~/hooks/use_settings';
 
@@ -13,7 +10,7 @@ export default function StreamButton() {
   const disabled = !shouldEnable.video && !shouldEnable.microphone;
 
   return (
-    <div css={{ width: '100%' }}>
+    <div style={{ width: '100%' }}>
       {!stream ? (
         <Button type="button" onClick={startStream} disabled={disabled}>
           Test devices
@@ -24,7 +21,9 @@ export default function StreamButton() {
         </Button>
       )}
       {disabled && (
-        <Legend center>At least a video nor a microphone is required</Legend>
+        <Text c="dimmed" style={{ textAlign: 'center' }}>
+          At least a video nor a microphone is required
+        </Text>
       )}
     </div>
   );

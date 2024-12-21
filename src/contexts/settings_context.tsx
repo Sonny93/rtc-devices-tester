@@ -1,8 +1,8 @@
 import { PropsWithChildren, createContext, useState } from 'react';
 import store from 'store2';
-import useVideos from '~/hooks/devices/use_videos';
 import useMicrophones from '~/hooks/devices/use_microphones';
 import useSpeakers from '~/hooks/devices/use_speakers';
+import useVideos from '~/hooks/devices/use_videos';
 
 const LS_SHOULD_ENABLE = 'should_enable_';
 
@@ -91,11 +91,11 @@ function SettingsContextProvider({ children }: PropsWithChildren) {
     });
 
   return (
-    <SettingsContext.Provider
+    <SettingsContext
       value={{ settings, changeSettingsToggle, changeSelectedDevice }}
     >
       {children}
-    </SettingsContext.Provider>
+    </SettingsContext>
   );
 }
 

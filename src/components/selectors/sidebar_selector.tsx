@@ -1,35 +1,24 @@
-/** @jsxImportSource @emotion/react */
-
-import styled from '@emotion/styled';
-import Legend from '~/components/common/legend';
-import VideosSelector from '~/components/selectors/videos_selector';
+import { Stack, Text } from '@mantine/core';
 import MicrophonesSelector from '~/components/selectors/microphones_selector';
 import SpeakersSelector from '~/components/selectors/speakers_selector';
+import VideosSelector from '~/components/selectors/videos_selector';
 import useShouldCheckPermission from '~/hooks/use_should_check_permissions';
-
-const Wrapper = styled.section(({ theme }) => ({
-  height: 'auto',
-  backgroundColor: theme.colors.secondary,
-  padding: '1.5em',
-  borderRadius: '0.75em',
-  boxShadow: theme.colors.boxShadow,
-}));
 
 export default function SidebarSelector() {
   const shouldCheckPermission = useShouldCheckPermission();
   return (
     <div>
-      <Wrapper>
+      <Stack gap="xl" p="md">
         <VideosSelector />
         <MicrophonesSelector />
         <SpeakersSelector />
-      </Wrapper>
+      </Stack>
       {!shouldCheckPermission && (
-        <Legend center css={{ marginTop: '2em' }}>
+        <Text c="dimmed" style={{ marginTop: '2em', textAlign: 'center' }}>
           When using 🦊 Firefox, devices and permissions are broken.
           <br />
           If you are experiencing a issue, try a Chromium-based browser.
-        </Legend>
+        </Text>
       )}
     </div>
   );
