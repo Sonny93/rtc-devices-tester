@@ -1,6 +1,8 @@
-import { Select, Switch } from '@mantine/core';
+import { Select } from '@mantine/core';
 import { useEffect } from 'react';
+import { Switch } from '~/components/common/switch';
 import { Devices } from '~/contexts/devices_context';
+import { AvailableSettings } from '~/contexts/settings_context';
 import usePermissions from '~/hooks/permissions/use_permissions';
 import useStream from '~/hooks/stream/use_stream';
 import useSettings from '~/hooks/use_settings';
@@ -44,16 +46,13 @@ export default function DeviceSelector({
       label={
         <Switch
           label={capitalize(type)}
+          name={type}
           checked={settings.shouldEnable[type] && !isErrored}
-          onChange={(event) =>
-            changeSettingsToggle(type, event.currentTarget.checked)
+          onChange={(name, checked) =>
+            changeSettingsToggle(name as AvailableSettings, checked)
           }
-          labelPosition="left"
-          mb="xs"
-          onLabel="ON"
-          offLabel="OFF"
           disabled={isErrored}
-          size="md"
+          mb="xs"
         />
       }
       name={`selector-${type}`}

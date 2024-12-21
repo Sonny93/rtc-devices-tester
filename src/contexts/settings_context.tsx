@@ -16,12 +16,12 @@ export type SettingsProps = {
     [device in DeviceType]: MediaDeviceInfo | null;
   };
   flipVideo: boolean;
+  visualizer: boolean;
 };
 
-type ToggleSettingsCallback = (
-  name: DeviceType | 'flipVideo',
-  value: boolean
-) => void;
+export type AvailableSettings = DeviceType | 'flipVideo' | 'visualizer';
+
+type ToggleSettingsCallback = (name: AvailableSettings, value: boolean) => void;
 
 type ChangeSelectedCallback = (
   device: DeviceType,
@@ -40,6 +40,7 @@ const SettingsContextDefaultValue: SettingsProps = {
     speaker: null,
   },
   flipVideo: false,
+  visualizer: false,
 };
 
 const SettingsContext = createContext<{
@@ -69,6 +70,7 @@ function SettingsContextProvider({ children }: PropsWithChildren) {
       speaker: store(LS_SHOULD_ENABLE + 'speaker'),
     },
     flipVideo: store(LS_SHOULD_ENABLE + 'flipVideo'),
+    visualizer: store(LS_SHOULD_ENABLE + 'visualizer'),
   }));
 
   const changeSettingsToggle: ToggleSettingsCallback = (name, value) =>
@@ -76,6 +78,8 @@ function SettingsContextProvider({ children }: PropsWithChildren) {
       const newSettings = { ..._settings };
       if (name === 'flipVideo') {
         newSettings['flipVideo'] = value;
+      } else if (name === 'visualizer') {
+        newSettings['visualizer'] = value;
       } else {
         newSettings['shouldEnable'][name] = value;
       }

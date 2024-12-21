@@ -6,7 +6,7 @@ import useSettings from '~/hooks/use_settings';
 
 export function Visualizer() {
   const {
-    settings: { shouldEnable },
+    settings: { shouldEnable, visualizer },
   } = useSettings();
   const { stream } = useStream();
   const [showVisualizer, setShowVisualizer] = useState<boolean>(false);
@@ -14,15 +14,20 @@ export function Visualizer() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (containerRef.current && stream && shouldEnable.microphone) {
+    if (
+      containerRef.current &&
+      stream &&
+      shouldEnable.microphone &&
+      visualizer
+    ) {
       const analyzer = new AudioMotionAnalyzer(containerRef.current, {
         mode: 10,
-        bgAlpha: 0.7,
-        fillAlpha: 0.6,
+        bgAlpha: 0,
+        fillAlpha: 0.3,
         gradient: 'rainbow',
         lineWidth: 2,
         lumiBars: false,
-        maxFreq: 16000,
+        maxFreq: 22000,
         radial: false,
         reflexAlpha: 1,
         reflexBright: 1,
@@ -45,13 +50,17 @@ export function Visualizer() {
         volumeMonitorStop();
       };
     }
-  }, [stream, shouldEnable.microphone]);
+  }, [stream, shouldEnable.microphone, visualizer]);
+
+  if (!visualizer) {
+    return <></>;
+  }
 
   return (
     <Box
       ref={containerRef}
       w="100%"
-      h="338px"
+      h="100%"
       style={{
         zIndex: 9,
         position: 'absolute',
