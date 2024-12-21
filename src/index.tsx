@@ -10,7 +10,7 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <MantineProvider>
+  <MantineProvider defaultColorScheme="dark">
     <DevicesContextProvider>
       <SettingsContextProvider>
         <StreamContextProvider>
