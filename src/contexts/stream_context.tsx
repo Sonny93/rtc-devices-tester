@@ -11,12 +11,14 @@ type StreamContextProps = {
   stream: MediaStream | null;
   startStream: () => void;
   stopStream: () => void;
+  loading: boolean;
 };
 
 const StreamContext = createContext<StreamContextProps>({
   stream: null,
   startStream: () => {},
   stopStream: () => {},
+  loading: false,
 });
 
 function StreamContextProvider({ children }: PropsWithChildren) {
@@ -24,6 +26,7 @@ function StreamContextProvider({ children }: PropsWithChildren) {
     settings: { selected, shouldEnable },
   } = useSettings();
   const [stream, setStream] = useState<MediaStream | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const generateMicrophoneConstraints = (device: MediaDeviceInfo) => ({
     deviceId: [device.deviceId],
@@ -57,9 +60,14 @@ function StreamContextProvider({ children }: PropsWithChildren) {
 
   const startStream = useCallback(async () => {
     if (stream) return;
+    setLoading(true);
 
-    const newStream = await navigator.mediaDevices.getUserMedia(constraints);
-    setStream(newStream);
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia(constraints);
+      setStream(stream);
+    } finally {
+      setLoading(false);
+    }
   }, [constraints, stream]);
 
   const stopStream = useCallback(async () => {
@@ -71,7 +79,7 @@ function StreamContextProvider({ children }: PropsWithChildren) {
   }, [stream]);
 
   return (
-    <StreamContext value={{ stream, startStream, stopStream }}>
+    <StreamContext value={{ stream, startStream, stopStream, loading }}>
       {children}
     </StreamContext>
   );
