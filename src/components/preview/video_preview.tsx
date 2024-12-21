@@ -1,36 +1,18 @@
-/** @jsxImportSource @emotion/react */
-
-import styled from '@emotion/styled';
-import { ExternalLink } from '@minimalstuff/ui';
+import { Anchor, Text } from '@mantine/core';
 import { useEffect, useRef } from 'react';
 import store from 'store2';
-import Legend from '~/components/common/legend';
+import ExternalLink from '~/components/common/external_link';
+import { Visualizer } from '~/components/preview/visualizer';
 import useStream from '~/hooks/stream/use_stream';
 import useSettings from '~/hooks/use_settings';
 
 const LS_USER_VOLUME = 'user_volume';
 const DEFAULT_SPEAKER_VOLUME = 0.3;
 
-const Video = styled.video<{ flip?: boolean }>(({ theme, flip }) => ({
-  height: '334px',
-  width: 'auto',
-  aspectRatio: '16 /9',
-  borderRadius: '0.5em',
-  boxShadow: theme.colors.boxShadow,
-  objectFit: 'cover',
-  transform: flip ? 'scaleX(-1)' : undefined,
-  overflow: 'hidden',
-
-  [`@media (max-width: ${theme.medias.mobile})`]: {
-    height: 'auto',
-    width: '100%',
-  },
-}));
-
 export default function VideoPreview() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const {
-    settings: { flipVideo, shouldEnable, selected },
+    settings: { shouldEnable, selected },
   } = useSettings();
   const { stream } = useStream();
 
@@ -54,34 +36,51 @@ export default function VideoPreview() {
   });
 
   return (
-    <div css={{ width: '100%' }}>
-      <Video
-        onDoubleClick={() => videoRef.current?.requestFullscreen()}
-        onVolumeChange={({ currentTarget }) =>
-          store(LS_USER_VOLUME, Number(currentTarget.volume.toFixed(1)))
-        }
-        ref={videoRef}
-        poster="/space.jpg"
-        flip={flipVideo}
-        playsInline
-        muted={!shouldEnable.speaker}
-      />
-      <Legend center>
+    <div style={{ width: '100%' }}>
+      <div style={{ position: 'relative' }}>
+        <Visualizer />
+        <video
+          style={{
+            height: '334px',
+            width: 'auto',
+            aspectRatio: '16 /9',
+            borderRadius: '0.5em',
+            boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+            objectFit: 'cover',
+            overflow: 'hidden',
+          }}
+          onDoubleClick={() => videoRef.current?.requestFullscreen()}
+          onVolumeChange={({ currentTarget }) =>
+            store(LS_USER_VOLUME, Number(currentTarget.volume.toFixed(1)))
+          }
+          ref={videoRef}
+          poster="/space.jpg"
+          playsInline
+          muted={!shouldEnable.speaker}
+        />
+      </div>
+      <Text c="dimmed" style={{ textAlign: 'center' }}>
         {!stream ? (
           <>
             Photo by{' '}
-            <ExternalLink href="https://unsplash.com/fr/@aldebarans?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">
+            <Anchor
+              component={ExternalLink}
+              href="https://unsplash.com/fr/@aldebarans?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
+            >
               Aldebaran S
-            </ExternalLink>{' '}
+            </Anchor>{' '}
             on{' '}
-            <ExternalLink href="https://unsplash.com/fr/photos/illustration-de-galaxie-violette-et-noire-uXchDIKs4qI?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">
+            <Anchor
+              component={ExternalLink}
+              href="https://unsplash.com/fr/photos/illustration-de-galaxie-violette-et-noire-uXchDIKs4qI?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
+            >
               Unsplash
-            </ExternalLink>
+            </Anchor>
           </>
         ) : (
           '👀'
         )}
-      </Legend>
+      </Text>
     </div>
   );
 }
