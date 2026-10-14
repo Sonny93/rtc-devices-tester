@@ -2,7 +2,7 @@ import type { Config } from 'release-it';
 
 export default {
   hooks: {
-    'before:init': ['pnpm run typecheck'],
+    'before:init': ['pnpm run check'],
   },
   git: {
     commitMessage: 'chore: release v${version}',

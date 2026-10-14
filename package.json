@@ -9,11 +9,14 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
+    "lint": "oxlint .",
+    "lint:fix": "oxlint . --fix --fix-suggestions --fix-dangerously",
+    "format": "pnpm lint:fix; oxfmt .",
+    "format:check": "oxfmt . --check",
     "typecheck": "tsc --noEmit",
     "knip": "knip",
-    "release": "release-it",
-    "format": "prettier --write --parser typescript '**/*.{ts,tsx}'",
-    "lint": "eslint . --ext .ts,.tsx --report-unused-disable-directives --max-warnings 0"
+    "check": "pnpm run lint && pnpm run format:check && pnpm run typecheck && pnpm run knip",
+    "release": "release-it"
   },
   "dependencies": {
     "@minimalstuff/ui": "^4.0.0",
@@ -25,13 +28,15 @@
     "store2": "^2.14.4"
   },
   "devDependencies": {
+    "@minimalstuff/tooling": "^0.6.0",
     "@types/node": "^26.6.5",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.2",
-    "eslint": "^9.17.0",
     "knip": "^6.41.0",
-    "prettier": "^3.4.2",
+    "oxfmt": "^0.73.0",
+    "oxlint": "^1.88.0",
+    "oxlint-tsgolint": "^7.0.2004",
     "release-it": "^21.1.1",
     "typescript": "~6.0.3",
     "unocss": "^66.11.0",
