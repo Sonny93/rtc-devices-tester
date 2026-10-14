@@ -16,3 +16,6 @@ format:
 
 check:
 	@pnpm check
+
+test:
+	@pnpm test
