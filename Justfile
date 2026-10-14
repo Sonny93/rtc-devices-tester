@@ -9,4 +9,10 @@ prod: build
 	@pnpm run serve
 
 release:
-	@npx release-it
+	@pnpm release
+
+format:
+	@pnpm format
+
+check:
+	@pnpm check
