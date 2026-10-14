@@ -1,7 +1,8 @@
-import { Anchor, Text } from '@mantine/core';
-import { useEffect, useRef } from 'react';
+import clsx from 'clsx';
+import { type SyntheticEvent, useEffect, useRef } from 'react';
 import store from 'store2';
-import ExternalLink from '#/components/common/external_link';
+import MutedText from '#/components/common/muted_text';
+import PhotoCredit from '#/components/preview/photo_credit';
 import { Visualizer } from '#/components/preview/visualizer';
 import useStream from '#/hooks/stream/use_stream';
 import useSettings from '#/hooks/use_settings';
@@ -35,53 +36,35 @@ export default function VideoPreview() {
     }
   });
 
+  const handleDoubleClick = () => videoRef.current?.requestFullscreen();
+
+  const handleVolumeChange = ({
+    currentTarget,
+  }: SyntheticEvent<HTMLVideoElement>) =>
+    store(LS_USER_VOLUME, Number(currentTarget.volume.toFixed(1)));
+
   return (
-    <div style={{ width: '100%' }}>
-      <div style={{ position: 'relative' }}>
+    <div className="w-full">
+      <div className="relative">
         <Visualizer />
         <video
-          style={{
-            height: 'auto',
-            width: '100%',
-            aspectRatio: '16 /9',
-            borderRadius: '0.5em',
-            boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-            objectFit: 'cover',
-            overflow: 'hidden',
-            transform: flipVideo ? 'scaleX(-1)' : 'none',
-          }}
-          onDoubleClick={() => videoRef.current?.requestFullscreen()}
-          onVolumeChange={({ currentTarget }) =>
-            store(LS_USER_VOLUME, Number(currentTarget.volume.toFixed(1)))
-          }
+          className={clsx(
+            'aspect-video h-auto w-full overflow-hidden rounded-lg object-cover shadow-md',
+            flipVideo && '-scale-x-100'
+          )}
+          onDoubleClick={handleDoubleClick}
+          onVolumeChange={handleVolumeChange}
           ref={videoRef}
           poster="/space.jpg"
           playsInline
           muted={!shouldEnable.speaker}
         />
       </div>
-      <Text c="dimmed" style={{ textAlign: 'center' }}>
-        {!stream ? (
-          <>
-            Photo by{' '}
-            <Anchor
-              component={ExternalLink}
-              href="https://unsplash.com/fr/@aldebarans?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
-            >
-              Aldebaran S
-            </Anchor>{' '}
-            on{' '}
-            <Anchor
-              component={ExternalLink}
-              href="https://unsplash.com/fr/photos/illustration-de-galaxie-violette-et-noire-uXchDIKs4qI?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
-            >
-              Unsplash
-            </Anchor>
-          </>
-        ) : (
-          '👀'
-        )}
-      </Text>
+      {stream ? (
+        <MutedText className="text-center">👀</MutedText>
+      ) : (
+        <PhotoCredit />
+      )}
     </div>
   );
 }

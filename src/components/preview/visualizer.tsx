@@ -1,4 +1,4 @@
-import { Box } from '@mantine/core';
+import clsx from 'clsx';
 import AudioMotionAnalyzer from 'audiomotion-analyzer';
 import { useEffect, useRef, useState } from 'react';
 import useStream from '#/hooks/stream/use_stream';
@@ -57,15 +57,12 @@ export function Visualizer() {
   }
 
   return (
-    <Box
+    <div
       ref={containerRef}
-      w="100%"
-      h="100%"
-      style={{
-        zIndex: 9,
-        position: 'absolute',
-        visibility: showVisualizer ? 'visible' : 'hidden',
-      }}
+      className={clsx(
+        'absolute z-10 size-full',
+        showVisualizer ? 'visible' : 'invisible'
+      )}
     />
   );
 }

@@ -1,4 +1,3 @@
-import { Flex } from '@mantine/core';
 import { useEffect } from 'react';
 import VideoPreview from '#/components/preview/video_preview';
 import useStream from '#/hooks/stream/use_stream';
@@ -19,16 +18,8 @@ export default function SidebarPreview() {
   }, [disabled, stopStream, stream]);
 
   return (
-    <Flex
-      h="100%"
-      w="100%"
-      flex={1}
-      gap="xs"
-      justify="center"
-      align="flex-start"
-      direction="column"
-    >
+    <div className="flex w-full flex-col items-start justify-center gap-2">
       <VideoPreview />
-    </Flex>
+    </div>
   );
 }

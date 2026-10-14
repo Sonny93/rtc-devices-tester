@@ -1,21 +1,14 @@
-import { version } from '../../../package.json';
-import { Anchor, Group, Text } from '@mantine/core';
 import ExternalLink from '#/components/common/external_link';
+import { version } from '../../../package.json';
 
 const Footer = () => (
-  <Group gap={4} c="dimmed" justify="center" mt="auto">
-    <Text size="sm">Made with ❤️ by</Text>{' '}
-    <Anchor size="sm" component={ExternalLink} href="https://www.sonny.dev/">
-      Sonny
-    </Anchor>
-    {' • '}
-    <Anchor
-      size="sm"
-      component={ExternalLink}
-      href="https://github.com/Sonny93/rtc-devices-tester"
-    >
+  <footer className="mt-auto flex flex-wrap items-center justify-center gap-1 text-sm text-gray-500 dark:text-gray-400">
+    <span>Made with ❤️ by</span>
+    <ExternalLink href="https://www.sonny.dev/">Sonny</ExternalLink>
+    <span>•</span>
+    <ExternalLink href="https://github.com/Sonny93/rtc-devices-tester">
       {version}
-    </Anchor>
-  </Group>
+    </ExternalLink>
+  </footer>
 );
 export default Footer;

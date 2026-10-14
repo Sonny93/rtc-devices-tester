@@ -1,6 +1,6 @@
-import { MantineProvider } from '@mantine/core';
-import '@mantine/core/styles.css';
+import '@minimalstuff/ui/style.css';
 import ReactDOM from 'react-dom/client';
+import 'virtual:uno.css';
 import { DevicesContextProvider } from '#/contexts/devices_context';
 import { SettingsContextProvider } from '#/contexts/settings_context';
 import { StreamContextProvider } from '#/contexts/stream_context';
@@ -10,13 +10,11 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <MantineProvider defaultColorScheme="dark">
-    <DevicesContextProvider>
-      <SettingsContextProvider>
-        <StreamContextProvider>
-          <App />
-        </StreamContextProvider>
-      </SettingsContextProvider>
-    </DevicesContextProvider>
-  </MantineProvider>
+  <DevicesContextProvider>
+    <SettingsContextProvider>
+      <StreamContextProvider>
+        <App />
+      </StreamContextProvider>
+    </SettingsContextProvider>
+  </DevicesContextProvider>
 );

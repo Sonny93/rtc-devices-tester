@@ -1,25 +1,23 @@
-import { Grid, Group, Stack, Title } from '@mantine/core';
+import { ThemeToggle } from '@minimalstuff/ui';
 import Footer from '#/components/common/footer';
-import { ThemeSwitcher } from '#/components/common/theme_switcher';
 import SidebarPreview from '#/components/preview/sidebar_preview';
 import SidebarSelector from '#/components/selectors/sidebar_selector';
-import './app.css';
 
 const App = () => (
-  <Stack gap="lg">
-    <Group justify="space-between">
-      <Title order={1}>RTC Devices Tester</Title>
-      <ThemeSwitcher />
-    </Group>
-    <Grid>
-      <Grid.Col span={{ base: 12, sm: 6, md: 7, lg: 8 }}>
+  <div className="mx-auto flex min-h-svh w-full max-w-7xl flex-col gap-6 p-4">
+    <header className="flex items-center justify-between">
+      <h1 className="text-3xl font-bold">RTC Devices Tester</h1>
+      <ThemeToggle />
+    </header>
+    <main className="grid grid-cols-12 gap-4">
+      <div className="col-span-12 sm:col-span-6 md:col-span-7 lg:col-span-8">
         <SidebarPreview />
-      </Grid.Col>
-      <Grid.Col span={{ base: 12, sm: 6, md: 5, lg: 4 }}>
+      </div>
+      <div className="col-span-12 sm:col-span-6 md:col-span-5 lg:col-span-4">
         <SidebarSelector />
-      </Grid.Col>
-    </Grid>
+      </div>
+    </main>
     <Footer />
-  </Stack>
+  </div>
 );
 export default App;

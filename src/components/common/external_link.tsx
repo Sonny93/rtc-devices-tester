@@ -1,18 +1,18 @@
-import { AnchorHTMLAttributes, CSSProperties, ReactNode } from 'react';
+import clsx from 'clsx';
+import type { ComponentPropsWithoutRef } from 'react';
 
-export default function ExternalLink({
-	children,
-	title,
-	...props
-}: AnchorHTMLAttributes<HTMLAnchorElement> & {
-	children: ReactNode;
-	style?: CSSProperties;
-	title?: string;
-	className?: string;
-}) {
-	return (
-		<a target="_blank" rel="noreferrer" title={title} {...props}>
-			{children}
-		</a>
-	);
-}
+const LINK_CLASSES = 'text-blue-600 hover:underline dark:text-blue-400';
+
+type ExternalLinkProps = Readonly<ComponentPropsWithoutRef<'a'>>;
+
+const ExternalLink = ({ className, children, ...props }: ExternalLinkProps) => (
+  <a
+    target="_blank"
+    rel="noreferrer"
+    className={clsx(LINK_CLASSES, className)}
+    {...props}
+  >
+    {children}
+  </a>
+);
+export default ExternalLink;

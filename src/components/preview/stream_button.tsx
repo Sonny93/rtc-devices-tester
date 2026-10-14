@@ -1,4 +1,5 @@
-import { Button, Text } from '@mantine/core';
+import { Button } from '@minimalstuff/ui';
+import MutedText from '#/components/common/muted_text';
 import useStream from '#/hooks/stream/use_stream';
 import useSettings from '#/hooks/use_settings';
 
@@ -9,26 +10,26 @@ export default function StreamButton() {
   } = useSettings();
   const disabled = !shouldEnable.video && !shouldEnable.microphone;
 
-  const commonProps = {
-    type: 'button',
-    w: '100%',
-    loading,
-  } as const;
   return (
-    <div style={{ width: '100%' }}>
-      {!stream ? (
-        <Button {...commonProps} onClick={startStream} disabled={disabled}>
-          Test devices
+    <div className="w-full">
+      {stream ? (
+        <Button fullWidth loading={loading} onClick={stopStream}>
+          Stop testing
         </Button>
       ) : (
-        <Button {...commonProps} onClick={stopStream}>
-          Stop testing
+        <Button
+          fullWidth
+          loading={loading}
+          onClick={startStream}
+          disabled={disabled || loading}
+        >
+          Test devices
         </Button>
       )}
       {disabled && (
-        <Text c="dimmed" style={{ textAlign: 'center' }}>
+        <MutedText className="mt-2 text-center">
           At least a video nor a microphone is required
-        </Text>
+        </MutedText>
       )}
     </div>
   );
