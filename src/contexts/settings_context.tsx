@@ -1,11 +1,9 @@
-import store from 'store2';
 import { PropsWithChildren, createContext, useState } from 'react';
 
 import useVideos from '#/hooks/devices/use_videos';
 import useSpeakers from '#/hooks/devices/use_speakers';
 import useMicrophones from '#/hooks/devices/use_microphones';
-
-const LS_SHOULD_ENABLE = 'should_enable_';
+import { readStoredToggle, writeStoredToggle } from '#/lib/settings_storage';
 
 type DeviceType = 'microphone' | 'video' | 'speaker';
 
@@ -59,6 +57,7 @@ function SettingsContextProvider({ children }: PropsWithChildren) {
 	const microphones = useMicrophones();
 	const speakers = useSpeakers();
 
+	const defaults = SettingsContextDefaultValue;
 	const [settings, setSettings] = useState<SettingsProps>(() => ({
 		selected: {
 			video: videos?.[0] ?? null,
@@ -66,12 +65,15 @@ function SettingsContextProvider({ children }: PropsWithChildren) {
 			speaker: speakers?.[0] ?? null,
 		},
 		shouldEnable: {
-			video: store(LS_SHOULD_ENABLE + 'video'),
-			microphone: store(LS_SHOULD_ENABLE + 'microphone'),
-			speaker: store(LS_SHOULD_ENABLE + 'speaker'),
+			video: readStoredToggle('video', defaults.shouldEnable.video),
+			microphone: readStoredToggle(
+				'microphone',
+				defaults.shouldEnable.microphone
+			),
+			speaker: readStoredToggle('speaker', defaults.shouldEnable.speaker),
 		},
-		flipVideo: store(LS_SHOULD_ENABLE + 'flipVideo'),
-		visualizer: store(LS_SHOULD_ENABLE + 'visualizer'),
+		flipVideo: readStoredToggle('flipVideo', defaults.flipVideo),
+		visualizer: readStoredToggle('visualizer', defaults.visualizer),
 	}));
 
 	const changeSettingsToggle: ToggleSettingsCallback = (name, value) =>
@@ -84,7 +86,7 @@ function SettingsContextProvider({ children }: PropsWithChildren) {
 			} else {
 				newSettings['shouldEnable'][name] = value;
 			}
-			store(LS_SHOULD_ENABLE + name, value);
+			writeStoredToggle(name, value);
 			return newSettings;
 		});
 
