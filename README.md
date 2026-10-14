@@ -23,7 +23,7 @@ just build    # production build
 just prod     # production build, then preview it
 just check    # lint, format check, typecheck and knip
 just format   # fix lint issues and format the code
-just release  # create a release
+just release  # create a release (deploys to GitHub Pages)
 ```
 
 ### Technologies used

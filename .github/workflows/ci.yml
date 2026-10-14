@@ -1,9 +1,11 @@
-name: Deploy
+name: CI & Deploy
 
 on:
   push:
     branches: [main]
   pull_request:
+  release:
+    types: [published]
   workflow_dispatch:
 
 permissions:
@@ -19,13 +21,14 @@ jobs:
       - run: pnpm run check
       - run: pnpm run test
       - run: pnpm build
-      - uses: actions/upload-pages-artifact@v5
+      - if: github.event_name == 'release' || github.event_name == 'workflow_dispatch'
+        uses: actions/upload-pages-artifact@v5
         with:
           path: dist
 
   deploy:
     needs: check
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'release' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     concurrency:
       group: pages
