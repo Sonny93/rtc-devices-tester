@@ -9,14 +9,14 @@ const LS_SHOULD_ENABLE = 'should_enable_';
 type DeviceType = 'microphone' | 'video' | 'speaker';
 
 type SettingsProps = {
-  shouldEnable: {
-    [device in DeviceType]: boolean;
-  };
-  selected: {
-    [device in DeviceType]: MediaDeviceInfo | null;
-  };
-  flipVideo: boolean;
-  visualizer: boolean;
+	shouldEnable: {
+		[device in DeviceType]: boolean;
+	};
+	selected: {
+		[device in DeviceType]: MediaDeviceInfo | null;
+	};
+	flipVideo: boolean;
+	visualizer: boolean;
 };
 
 export type AvailableSettings = DeviceType | 'flipVideo' | 'visualizer';
@@ -24,83 +24,83 @@ export type AvailableSettings = DeviceType | 'flipVideo' | 'visualizer';
 type ToggleSettingsCallback = (name: AvailableSettings, value: boolean) => void;
 
 type ChangeSelectedCallback = (
-  device: DeviceType,
-  value: MediaDeviceInfo
+	device: DeviceType,
+	value: MediaDeviceInfo
 ) => void;
 
 const SettingsContextDefaultValue: SettingsProps = {
-  shouldEnable: {
-    microphone: true,
-    video: true,
-    speaker: false,
-  },
-  selected: {
-    microphone: null,
-    video: null,
-    speaker: null,
-  },
-  flipVideo: false,
-  visualizer: false,
+	shouldEnable: {
+		microphone: true,
+		video: true,
+		speaker: false,
+	},
+	selected: {
+		microphone: null,
+		video: null,
+		speaker: null,
+	},
+	flipVideo: false,
+	visualizer: false,
 };
 
 const SettingsContext = createContext<{
-  settings: SettingsProps;
-  changeSettingsToggle: ToggleSettingsCallback;
-  changeSelectedDevice: ChangeSelectedCallback;
+	settings: SettingsProps;
+	changeSettingsToggle: ToggleSettingsCallback;
+	changeSelectedDevice: ChangeSelectedCallback;
 }>({
-  settings: SettingsContextDefaultValue,
-  changeSettingsToggle: () => {},
-  changeSelectedDevice: () => {},
+	settings: SettingsContextDefaultValue,
+	changeSettingsToggle: () => {},
+	changeSelectedDevice: () => {},
 });
 
 function SettingsContextProvider({ children }: PropsWithChildren) {
-  const videos = useVideos();
-  const microphones = useMicrophones();
-  const speakers = useSpeakers();
+	const videos = useVideos();
+	const microphones = useMicrophones();
+	const speakers = useSpeakers();
 
-  const [settings, setSettings] = useState<SettingsProps>(() => ({
-    selected: {
-      video: videos?.[0] ?? null,
-      microphone: microphones?.[0] ?? null,
-      speaker: speakers?.[0] ?? null,
-    },
-    shouldEnable: {
-      video: store(LS_SHOULD_ENABLE + 'video'),
-      microphone: store(LS_SHOULD_ENABLE + 'microphone'),
-      speaker: store(LS_SHOULD_ENABLE + 'speaker'),
-    },
-    flipVideo: store(LS_SHOULD_ENABLE + 'flipVideo'),
-    visualizer: store(LS_SHOULD_ENABLE + 'visualizer'),
-  }));
+	const [settings, setSettings] = useState<SettingsProps>(() => ({
+		selected: {
+			video: videos?.[0] ?? null,
+			microphone: microphones?.[0] ?? null,
+			speaker: speakers?.[0] ?? null,
+		},
+		shouldEnable: {
+			video: store(LS_SHOULD_ENABLE + 'video'),
+			microphone: store(LS_SHOULD_ENABLE + 'microphone'),
+			speaker: store(LS_SHOULD_ENABLE + 'speaker'),
+		},
+		flipVideo: store(LS_SHOULD_ENABLE + 'flipVideo'),
+		visualizer: store(LS_SHOULD_ENABLE + 'visualizer'),
+	}));
 
-  const changeSettingsToggle: ToggleSettingsCallback = (name, value) =>
-    setSettings((_settings) => {
-      const newSettings = { ..._settings };
-      if (name === 'flipVideo') {
-        newSettings['flipVideo'] = value;
-      } else if (name === 'visualizer') {
-        newSettings['visualizer'] = value;
-      } else {
-        newSettings['shouldEnable'][name] = value;
-      }
-      store(LS_SHOULD_ENABLE + name, value);
-      return newSettings;
-    });
+	const changeSettingsToggle: ToggleSettingsCallback = (name, value) =>
+		setSettings((_settings) => {
+			const newSettings = { ..._settings };
+			if (name === 'flipVideo') {
+				newSettings['flipVideo'] = value;
+			} else if (name === 'visualizer') {
+				newSettings['visualizer'] = value;
+			} else {
+				newSettings['shouldEnable'][name] = value;
+			}
+			store(LS_SHOULD_ENABLE + name, value);
+			return newSettings;
+		});
 
-  const changeSelectedDevice: ChangeSelectedCallback = (device, value) =>
-    setSettings((_settings) => {
-      const newSettings = { ..._settings };
-      newSettings['selected'][device] = value;
-      return newSettings;
-    });
+	const changeSelectedDevice: ChangeSelectedCallback = (device, value) =>
+		setSettings((_settings) => {
+			const newSettings = { ..._settings };
+			newSettings['selected'][device] = value;
+			return newSettings;
+		});
 
-  return (
-    <SettingsContext
-      value={{ settings, changeSettingsToggle, changeSelectedDevice }}
-    >
-      {children}
-    </SettingsContext>
-  );
+	return (
+		<SettingsContext
+			value={{ settings, changeSettingsToggle, changeSelectedDevice }}
+		>
+			{children}
+		</SettingsContext>
+	);
 }
 
 export { SettingsContextProvider, SettingsContext as _SettingsContext };

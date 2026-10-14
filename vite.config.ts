@@ -3,6 +3,6 @@ import UnoCSS from 'unocss/vite';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  base: '/',
-  plugins: [react(), UnoCSS()],
+	base: '/',
+	plugins: [react(), UnoCSS()],
 });

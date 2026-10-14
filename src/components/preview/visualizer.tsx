@@ -5,106 +5,106 @@ import useStream from '#/hooks/stream/use_stream';
 import useSettings from '#/hooks/use_settings';
 
 export function Visualizer() {
-  const {
-    settings: { shouldEnable, visualizer },
-  } = useSettings();
-  const { stream } = useStream();
-  const [showVisualizer, setShowVisualizer] = useState<boolean>(false);
+	const {
+		settings: { shouldEnable, visualizer },
+	} = useSettings();
+	const { stream } = useStream();
+	const [showVisualizer, setShowVisualizer] = useState<boolean>(false);
 
-  const containerRef = useRef<HTMLDivElement>(null);
+	const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (
-      containerRef.current &&
-      stream &&
-      shouldEnable.microphone &&
-      visualizer
-    ) {
-      const analyzer = new AudioMotionAnalyzer(containerRef.current, {
-        mode: 10,
-        bgAlpha: 0,
-        fillAlpha: 0.3,
-        gradient: 'rainbow',
-        lineWidth: 2,
-        lumiBars: false,
-        maxFreq: 22000,
-        radial: false,
-        reflexAlpha: 1,
-        reflexBright: 1,
-        reflexRatio: 0.5,
-        showBgColor: false,
-        showScaleX: false,
-        showPeaks: false,
-        overlay: true,
-      });
-      analyzer.connectInput(analyzer.audioCtx.createMediaStreamSource(stream));
-      analyzer.disconnectOutput();
+	useEffect(() => {
+		if (
+			containerRef.current &&
+			stream &&
+			shouldEnable.microphone &&
+			visualizer
+		) {
+			const analyzer = new AudioMotionAnalyzer(containerRef.current, {
+				mode: 10,
+				bgAlpha: 0,
+				fillAlpha: 0.3,
+				gradient: 'rainbow',
+				lineWidth: 2,
+				lumiBars: false,
+				maxFreq: 22000,
+				radial: false,
+				reflexAlpha: 1,
+				reflexBright: 1,
+				reflexRatio: 0.5,
+				showBgColor: false,
+				showScaleX: false,
+				showPeaks: false,
+				overlay: true,
+			});
+			analyzer.connectInput(analyzer.audioCtx.createMediaStreamSource(stream));
+			analyzer.disconnectOutput();
 
-      const volumeMonitorStop = monitorMicrophoneVolume(
-        stream,
-        (volume) => setShowVisualizer(volume > 0.1),
-        10
-      );
-      return () => {
-        analyzer.destroy();
-        volumeMonitorStop();
-      };
-    }
-  }, [stream, shouldEnable.microphone, visualizer]);
+			const volumeMonitorStop = monitorMicrophoneVolume(
+				stream,
+				(volume) => setShowVisualizer(volume > 0.1),
+				10
+			);
+			return () => {
+				analyzer.destroy();
+				volumeMonitorStop();
+			};
+		}
+	}, [stream, shouldEnable.microphone, visualizer]);
 
-  if (!visualizer) {
-    return <></>;
-  }
+	if (!visualizer) {
+		return <></>;
+	}
 
-  return (
-    <div
-      ref={containerRef}
-      className={clsx(
-        'absolute z-10 size-full',
-        showVisualizer ? 'visible' : 'invisible'
-      )}
-    />
-  );
+	return (
+		<div
+			ref={containerRef}
+			className={clsx(
+				'absolute z-10 size-full',
+				showVisualizer ? 'visible' : 'invisible'
+			)}
+		/>
+	);
 }
 
 function monitorMicrophoneVolume(
-  stream: MediaStream,
-  callback: (volume: number) => void,
-  interval: number = 100
+	stream: MediaStream,
+	callback: (volume: number) => void,
+	interval: number = 100
 ): () => void {
-  const audioContext = new AudioContext();
-  const analyser = audioContext.createAnalyser();
-  const microphone = audioContext.createMediaStreamSource(stream);
-  const dataArray = new Uint8Array(analyser.frequencyBinCount);
+	const audioContext = new AudioContext();
+	const analyser = audioContext.createAnalyser();
+	const microphone = audioContext.createMediaStreamSource(stream);
+	const dataArray = new Uint8Array(analyser.frequencyBinCount);
 
-  microphone.connect(analyser);
-  analyser.fftSize = 256;
+	microphone.connect(analyser);
+	analyser.fftSize = 256;
 
-  const bufferLength = analyser.frequencyBinCount;
-  let lastVolume = -1;
+	const bufferLength = analyser.frequencyBinCount;
+	let lastVolume = -1;
 
-  const analyzeVolume = () => {
-    analyser.getByteFrequencyData(dataArray);
+	const analyzeVolume = () => {
+		analyser.getByteFrequencyData(dataArray);
 
-    let sum = 0;
-    for (let i = 0; i < bufferLength; i++) {
-      sum += dataArray[i] * dataArray[i];
-    }
-    const rms = Math.sqrt(sum / bufferLength);
+		let sum = 0;
+		for (let i = 0; i < bufferLength; i++) {
+			sum += dataArray[i] * dataArray[i];
+		}
+		const rms = Math.sqrt(sum / bufferLength);
 
-    // Normalize the volume
-    const volume = rms / 128;
+		// Normalize the volume
+		const volume = rms / 128;
 
-    if (Math.abs(volume - lastVolume) > 0.01 || lastVolume === -1) {
-      callback(volume);
-      lastVolume = volume;
-    }
-  };
+		if (Math.abs(volume - lastVolume) > 0.01 || lastVolume === -1) {
+			callback(volume);
+			lastVolume = volume;
+		}
+	};
 
-  const intervalId = setInterval(analyzeVolume, interval);
+	const intervalId = setInterval(analyzeVolume, interval);
 
-  return () => {
-    clearInterval(intervalId);
-    audioContext.close();
-  };
+	return () => {
+		clearInterval(intervalId);
+		audioContext.close();
+	};
 }

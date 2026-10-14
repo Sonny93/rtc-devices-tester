@@ -7,14 +7,14 @@ import { StreamContextProvider } from '#/contexts/stream_context';
 import App from './app';
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+	document.getElementById('root') as HTMLElement
 );
 root.render(
-  <DevicesContextProvider>
-    <SettingsContextProvider>
-      <StreamContextProvider>
-        <App />
-      </StreamContextProvider>
-    </SettingsContextProvider>
-  </DevicesContextProvider>
+	<DevicesContextProvider>
+		<SettingsContextProvider>
+			<StreamContextProvider>
+				<App />
+			</StreamContextProvider>
+		</SettingsContextProvider>
+	</DevicesContextProvider>
 );
