@@ -1,8 +1,8 @@
 import { Box } from '@mantine/core';
 import AudioMotionAnalyzer from 'audiomotion-analyzer';
 import { useEffect, useRef, useState } from 'react';
-import useStream from '~/hooks/stream/use_stream';
-import useSettings from '~/hooks/use_settings';
+import useStream from '#/hooks/stream/use_stream';
+import useSettings from '#/hooks/use_settings';
 
 export function Visualizer() {
   const {

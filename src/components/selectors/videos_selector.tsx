@@ -1,6 +1,6 @@
-import DeviceSelector from '~/components/selectors/device_selector';
-import useVideos from '~/hooks/devices/use_videos';
-import useSettings from '~/hooks/use_settings';
+import DeviceSelector from '#/components/selectors/device_selector';
+import useVideos from '#/hooks/devices/use_videos';
+import useSettings from '#/hooks/use_settings';
 
 export default function VideosSelector() {
   const videos = useVideos();

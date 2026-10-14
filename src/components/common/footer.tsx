@@ -1,6 +1,6 @@
-import packageJson from '@/package.json';
+import { version } from '../../../package.json';
 import { Anchor, Group, Text } from '@mantine/core';
-import ExternalLink from '~/components/common/external_link';
+import ExternalLink from '#/components/common/external_link';
 
 const Footer = () => (
   <Group gap={4} c="dimmed" justify="center" mt="auto">
@@ -14,7 +14,7 @@ const Footer = () => (
       component={ExternalLink}
       href="https://github.com/Sonny93/rtc-devices-tester"
     >
-      {packageJson.version}
+      {version}
     </Anchor>
   </Group>
 );

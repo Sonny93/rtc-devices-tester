@@ -1,12 +1,12 @@
 import { Box, Divider, Stack, Text } from '@mantine/core';
-import { Switch } from '~/components/common/switch';
-import StreamButton from '~/components/preview/stream_button';
-import MicrophonesSelector from '~/components/selectors/microphones_selector';
-import SpeakersSelector from '~/components/selectors/speakers_selector';
-import VideosSelector from '~/components/selectors/videos_selector';
-import { AvailableSettings } from '~/contexts/settings_context';
-import useSettings from '~/hooks/use_settings';
-import useShouldCheckPermission from '~/hooks/use_should_check_permissions';
+import { Switch } from '#/components/common/switch';
+import StreamButton from '#/components/preview/stream_button';
+import MicrophonesSelector from '#/components/selectors/microphones_selector';
+import SpeakersSelector from '#/components/selectors/speakers_selector';
+import VideosSelector from '#/components/selectors/videos_selector';
+import { AvailableSettings } from '#/contexts/settings_context';
+import useSettings from '#/hooks/use_settings';
+import useShouldCheckPermission from '#/hooks/use_should_check_permissions';
 
 export default function SidebarSelector() {
   const shouldCheckPermission = useShouldCheckPermission();

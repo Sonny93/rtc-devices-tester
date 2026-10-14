@@ -1,6 +1,6 @@
 import { Button, Text } from '@mantine/core';
-import useStream from '~/hooks/stream/use_stream';
-import useSettings from '~/hooks/use_settings';
+import useStream from '#/hooks/stream/use_stream';
+import useSettings from '#/hooks/use_settings';
 
 export default function StreamButton() {
   const { stream, startStream, stopStream, loading } = useStream();

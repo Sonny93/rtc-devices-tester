@@ -1,13 +1,13 @@
 import { Select } from '@mantine/core';
 import { useEffect } from 'react';
-import { Switch } from '~/components/common/switch';
-import { Devices } from '~/contexts/devices_context';
-import { AvailableSettings } from '~/contexts/settings_context';
-import usePermissions from '~/hooks/permissions/use_permissions';
-import useStream from '~/hooks/stream/use_stream';
-import useSettings from '~/hooks/use_settings';
-import useShouldCheckPermission from '~/hooks/use_should_check_permissions';
-import { capitalize } from '~/lib/string';
+import { Switch } from '#/components/common/switch';
+import { Devices } from '#/contexts/devices_context';
+import { AvailableSettings } from '#/contexts/settings_context';
+import usePermissions from '#/hooks/permissions/use_permissions';
+import useStream from '#/hooks/stream/use_stream';
+import useSettings from '#/hooks/use_settings';
+import useShouldCheckPermission from '#/hooks/use_should_check_permissions';
+import { capitalize } from '#/lib/string';
 
 interface DeviceSelectorProps {
   type: 'video' | 'microphone' | 'speaker';

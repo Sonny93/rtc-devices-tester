@@ -1,12 +1,3 @@
-export function getDevicesByKind(
-  deviceKind: MediaDeviceInfo['kind'],
-  devices?: MediaDeviceInfo[]
-) {
-  return devices
-    ? devices.filter((device) => device.kind === deviceKind)
-    : undefined;
-}
-
 async function testAndKillMedia(kind: 'audio' | 'video') {
   try {
     const stream = await navigator.mediaDevices.getUserMedia({

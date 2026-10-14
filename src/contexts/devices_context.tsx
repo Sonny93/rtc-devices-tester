@@ -1,6 +1,6 @@
 import { LoadingOverlay } from '@mantine/core';
 import { PropsWithChildren, createContext, useEffect, useState } from 'react';
-import { getDevices } from '~/lib/devices';
+import { getDevices } from '#/lib/devices';
 
 export type Devices = MediaDeviceInfo[];
 

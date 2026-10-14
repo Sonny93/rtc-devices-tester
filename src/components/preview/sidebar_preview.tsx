@@ -1,12 +1,8 @@
 import { Flex } from '@mantine/core';
 import { useEffect } from 'react';
-import VideoPreview from '~/components/preview/video_preview';
-import useStream from '~/hooks/stream/use_stream';
-import useSettings from '~/hooks/use_settings';
-
-type ToggleSettings = (name: string, value: boolean) => void;
-
-export type SettingsTogglerProps = { toggleSettings: ToggleSettings };
+import VideoPreview from '#/components/preview/video_preview';
+import useStream from '#/hooks/stream/use_stream';
+import useSettings from '#/hooks/use_settings';
 
 export default function SidebarPreview() {
   const { stream, stopStream } = useStream();

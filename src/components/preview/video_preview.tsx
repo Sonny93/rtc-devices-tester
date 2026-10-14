@@ -1,10 +1,10 @@
 import { Anchor, Text } from '@mantine/core';
 import { useEffect, useRef } from 'react';
 import store from 'store2';
-import ExternalLink from '~/components/common/external_link';
-import { Visualizer } from '~/components/preview/visualizer';
-import useStream from '~/hooks/stream/use_stream';
-import useSettings from '~/hooks/use_settings';
+import ExternalLink from '#/components/common/external_link';
+import { Visualizer } from '#/components/preview/visualizer';
+import useStream from '#/hooks/stream/use_stream';
+import useSettings from '#/hooks/use_settings';
 
 const LS_USER_VOLUME = 'user_volume';
 const DEFAULT_SPEAKER_VOLUME = 0.3;

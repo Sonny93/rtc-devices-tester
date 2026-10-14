@@ -5,7 +5,7 @@ import {
   useMemo,
   useState,
 } from 'react';
-import useSettings from '~/hooks/use_settings';
+import useSettings from '#/hooks/use_settings';
 
 type StreamContextProps = {
   stream: MediaStream | null;

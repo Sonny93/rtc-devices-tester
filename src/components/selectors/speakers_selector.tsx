@@ -1,6 +1,6 @@
-import DeviceSelector from '~/components/selectors/device_selector';
-import useSpeakers from '~/hooks/devices/use_speakers';
-import useSettings from '~/hooks/use_settings';
+import DeviceSelector from '#/components/selectors/device_selector';
+import useSpeakers from '#/hooks/devices/use_speakers';
+import useSettings from '#/hooks/use_settings';
 
 export default function SpeakersSelector() {
   const speakers = useSpeakers();

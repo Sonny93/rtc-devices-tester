@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getPermissions } from '~/lib/permission';
+import { getPermissions } from '#/lib/permission';
 
 export default function usePermissions(permissionName: string) {
   const [permissionState, setPermissionState] = useState<

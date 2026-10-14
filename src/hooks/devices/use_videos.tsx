@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import useDevices from '~/hooks/devices/use_devices';
+import useDevices from '#/hooks/devices/use_devices';
 
 export default function useCameras() {
   const { devices } = useDevices();

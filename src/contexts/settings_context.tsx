@@ -1,14 +1,14 @@
 import { PropsWithChildren, createContext, useState } from 'react';
 import store from 'store2';
-import useMicrophones from '~/hooks/devices/use_microphones';
-import useSpeakers from '~/hooks/devices/use_speakers';
-import useVideos from '~/hooks/devices/use_videos';
+import useMicrophones from '#/hooks/devices/use_microphones';
+import useSpeakers from '#/hooks/devices/use_speakers';
+import useVideos from '#/hooks/devices/use_videos';
 
 const LS_SHOULD_ENABLE = 'should_enable_';
 
-export type DeviceType = 'microphone' | 'video' | 'speaker';
+type DeviceType = 'microphone' | 'video' | 'speaker';
 
-export type SettingsProps = {
+type SettingsProps = {
   shouldEnable: {
     [device in DeviceType]: boolean;
   };
