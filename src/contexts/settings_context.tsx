@@ -42,6 +42,20 @@ const SettingsContextDefaultValue: SettingsProps = {
 	visualizer: false,
 };
 
+const applyToggle = (
+	settings: SettingsProps,
+	name: AvailableSettings,
+	value: boolean
+): SettingsProps => {
+	if (name === 'flipVideo' || name === 'visualizer') {
+		return { ...settings, [name]: value };
+	}
+	return {
+		...settings,
+		shouldEnable: { ...settings.shouldEnable, [name]: value },
+	};
+};
+
 const SettingsContext = createContext<{
 	settings: SettingsProps;
 	changeSettingsToggle: ToggleSettingsCallback;
@@ -76,26 +90,18 @@ function SettingsContextProvider({ children }: PropsWithChildren) {
 		visualizer: readStoredToggle('visualizer', defaults.visualizer),
 	}));
 
-	const changeSettingsToggle: ToggleSettingsCallback = (name, value) =>
-		setSettings((_settings) => {
-			const newSettings = { ..._settings };
-			if (name === 'flipVideo') {
-				newSettings['flipVideo'] = value;
-			} else if (name === 'visualizer') {
-				newSettings['visualizer'] = value;
-			} else {
-				newSettings['shouldEnable'][name] = value;
-			}
-			writeStoredToggle(name, value);
-			return newSettings;
-		});
+	const changeSettingsToggle: ToggleSettingsCallback = (name, value) => {
+		setSettings((previousSettings) =>
+			applyToggle(previousSettings, name, value)
+		);
+		writeStoredToggle(name, value);
+	};
 
 	const changeSelectedDevice: ChangeSelectedCallback = (device, value) =>
-		setSettings((_settings) => {
-			const newSettings = { ..._settings };
-			newSettings['selected'][device] = value;
-			return newSettings;
-		});
+		setSettings((previousSettings) => ({
+			...previousSettings,
+			selected: { ...previousSettings.selected, [device]: value },
+		}));
 
 	return (
 		<SettingsContext
