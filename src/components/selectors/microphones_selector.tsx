@@ -1,6 +1,6 @@
-import DeviceSelector from '#/components/selectors/device_selector';
-import useMicrophones from '#/hooks/devices/use_microphones';
 import useSettings from '#/hooks/use_settings';
+import useMicrophones from '#/hooks/devices/use_microphones';
+import DeviceSelector from '#/components/selectors/device_selector';
 
 export default function MicrophonesSelector() {
 	const microphones = useMicrophones();

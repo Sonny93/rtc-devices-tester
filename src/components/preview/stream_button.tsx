@@ -1,7 +1,8 @@
 import { Button } from '@minimalstuff/ui';
-import MutedText from '#/components/common/muted_text';
-import useStream from '#/hooks/stream/use_stream';
+
 import useSettings from '#/hooks/use_settings';
+import useStream from '#/hooks/stream/use_stream';
+import MutedText from '#/components/common/muted_text';
 
 export default function StreamButton() {
 	const { stream, startStream, stopStream, loading } = useStream();

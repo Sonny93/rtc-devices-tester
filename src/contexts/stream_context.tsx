@@ -5,6 +5,7 @@ import {
 	useMemo,
 	useState,
 } from 'react';
+
 import useSettings from '#/hooks/use_settings';
 
 type StreamContextProps = {
@@ -58,19 +59,18 @@ function StreamContextProvider({ children }: PropsWithChildren) {
 		shouldEnable.microphone,
 	]);
 
-	const startStream = useCallback(async () => {
+	const startStream = useCallback(() => {
 		if (stream) return;
 		setLoading(true);
 
-		try {
-			const stream = await navigator.mediaDevices.getUserMedia(constraints);
-			setStream(stream);
-		} finally {
-			setLoading(false);
-		}
+		navigator.mediaDevices
+			.getUserMedia(constraints)
+			.then(setStream)
+			.catch(console.error)
+			.finally(() => setLoading(false));
 	}, [constraints, stream]);
 
-	const stopStream = useCallback(async () => {
+	const stopStream = useCallback(() => {
 		if (!stream) return;
 
 		const tracks = stream.getTracks();

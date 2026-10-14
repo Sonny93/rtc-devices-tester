@@ -1,11 +1,12 @@
 import clsx from 'clsx';
-import { type SyntheticEvent, useEffect, useRef } from 'react';
 import store from 'store2';
+import { type SyntheticEvent, useEffect, useRef } from 'react';
+
+import useSettings from '#/hooks/use_settings';
+import useStream from '#/hooks/stream/use_stream';
 import MutedText from '#/components/common/muted_text';
 import PhotoCredit from '#/components/preview/photo_credit';
 import { Visualizer } from '#/components/preview/visualizer';
-import useStream from '#/hooks/stream/use_stream';
-import useSettings from '#/hooks/use_settings';
 
 const LS_USER_VOLUME = 'user_volume';
 const DEFAULT_SPEAKER_VOLUME = 0.3;
@@ -29,14 +30,16 @@ export default function VideoPreview() {
 		videoTag.srcObject = stream;
 		videoTag.volume = store(LS_USER_VOLUME) ?? DEFAULT_SPEAKER_VOLUME;
 		videoTag.controls = true;
-		videoTag.play();
+		videoTag.play().catch(console.error);
 
 		if (shouldEnable.speaker && selected.speaker) {
-			videoTag.setSinkId(selected.speaker.deviceId);
+			videoTag.setSinkId(selected.speaker.deviceId).catch(console.error);
 		}
 	});
 
-	const handleDoubleClick = () => videoRef.current?.requestFullscreen();
+	const handleDoubleClick = () => {
+		videoRef.current?.requestFullscreen().catch(console.error);
+	};
 
 	const handleVolumeChange = ({
 		currentTarget,

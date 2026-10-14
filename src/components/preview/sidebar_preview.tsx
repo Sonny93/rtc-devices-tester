@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
-import VideoPreview from '#/components/preview/video_preview';
-import useStream from '#/hooks/stream/use_stream';
+
 import useSettings from '#/hooks/use_settings';
+import useStream from '#/hooks/stream/use_stream';
+import VideoPreview from '#/components/preview/video_preview';
 
 export default function SidebarPreview() {
 	const { stream, stopStream } = useStream();

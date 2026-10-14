@@ -1,5 +1,5 @@
-import ExternalLink from '#/components/common/external_link';
 import MutedText from '#/components/common/muted_text';
+import ExternalLink from '#/components/common/external_link';
 
 const AUTHOR_URL =
 	'https://unsplash.com/fr/@aldebarans?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash';

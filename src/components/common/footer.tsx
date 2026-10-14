@@ -1,5 +1,5 @@
-import ExternalLink from '#/components/common/external_link';
 import { version } from '../../../package.json';
+import ExternalLink from '#/components/common/external_link';
 
 const Footer = () => (
 	<footer className="mt-auto flex flex-wrap items-center justify-center gap-1 text-sm text-gray-500 dark:text-gray-400">

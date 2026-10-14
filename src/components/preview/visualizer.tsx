@@ -1,8 +1,9 @@
 import clsx from 'clsx';
-import AudioMotionAnalyzer from 'audiomotion-analyzer';
 import { useEffect, useRef, useState } from 'react';
-import useStream from '#/hooks/stream/use_stream';
+import AudioMotionAnalyzer from 'audiomotion-analyzer';
+
 import useSettings from '#/hooks/use_settings';
+import useStream from '#/hooks/stream/use_stream';
 
 export function Visualizer() {
 	const {
@@ -105,6 +106,6 @@ function monitorMicrophoneVolume(
 
 	return () => {
 		clearInterval(intervalId);
-		audioContext.close();
+		audioContext.close().catch(console.error);
 	};
 }

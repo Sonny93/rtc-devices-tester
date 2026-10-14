@@ -1,12 +1,12 @@
-import DividerLabel from '#/components/common/divider_label';
-import MutedText from '#/components/common/muted_text';
-import SettingSwitch from '#/components/common/setting_switch';
-import StreamButton from '#/components/preview/stream_button';
-import MicrophonesSelector from '#/components/selectors/microphones_selector';
-import SpeakersSelector from '#/components/selectors/speakers_selector';
-import VideosSelector from '#/components/selectors/videos_selector';
 import useSettings from '#/hooks/use_settings';
+import MutedText from '#/components/common/muted_text';
+import DividerLabel from '#/components/common/divider_label';
+import StreamButton from '#/components/preview/stream_button';
+import SettingSwitch from '#/components/common/setting_switch';
+import VideosSelector from '#/components/selectors/videos_selector';
+import SpeakersSelector from '#/components/selectors/speakers_selector';
 import useShouldCheckPermission from '#/hooks/use_should_check_permissions';
+import MicrophonesSelector from '#/components/selectors/microphones_selector';
 
 export default function SidebarSelector() {
 	const shouldCheckPermission = useShouldCheckPermission();

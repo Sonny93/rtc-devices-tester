@@ -1,8 +1,9 @@
-import { PropsWithChildren, createContext, useState } from 'react';
 import store from 'store2';
-import useMicrophones from '#/hooks/devices/use_microphones';
-import useSpeakers from '#/hooks/devices/use_speakers';
+import { PropsWithChildren, createContext, useState } from 'react';
+
 import useVideos from '#/hooks/devices/use_videos';
+import useSpeakers from '#/hooks/devices/use_speakers';
+import useMicrophones from '#/hooks/devices/use_microphones';
 
 const LS_SHOULD_ENABLE = 'should_enable_';
 

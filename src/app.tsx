@@ -1,4 +1,5 @@
 import { ThemeToggle } from '@minimalstuff/ui';
+
 import Footer from '#/components/common/footer';
 import SidebarPreview from '#/components/preview/sidebar_preview';
 import SidebarSelector from '#/components/selectors/sidebar_selector';

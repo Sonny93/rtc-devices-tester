@@ -4,7 +4,7 @@ async function testAndKillMedia(kind: 'audio' | 'video') {
 			[kind]: true,
 		});
 		stream.getTracks().forEach((track) => track.stop());
-	} catch (_) {
+	} catch {
 		// We don't care about errors here.
 	}
 }

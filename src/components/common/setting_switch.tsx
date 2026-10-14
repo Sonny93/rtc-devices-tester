@@ -1,7 +1,8 @@
-import { Switch } from '@minimalstuff/ui';
 import type { ChangeEvent } from 'react';
-import type { AvailableSettings } from '#/contexts/settings_context';
+import { Switch } from '@minimalstuff/ui';
+
 import useSettings from '#/hooks/use_settings';
+import type { AvailableSettings } from '#/contexts/settings_context';
 
 type SettingSwitchProps = Readonly<{
 	label: string;

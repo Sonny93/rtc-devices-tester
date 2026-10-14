@@ -1,6 +1,7 @@
 import { PropsWithChildren, createContext, useEffect, useState } from 'react';
-import Loading from '#/components/common/loading';
+
 import { getDevices } from '#/lib/devices';
+import Loading from '#/components/common/loading';
 
 export type Devices = MediaDeviceInfo[];
 
