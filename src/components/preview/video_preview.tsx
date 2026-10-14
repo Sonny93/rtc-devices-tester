@@ -58,7 +58,7 @@ export default function VideoPreview() {
 					onDoubleClick={handleDoubleClick}
 					onVolumeChange={handleVolumeChange}
 					ref={videoRef}
-					poster="/space.jpg"
+					poster={`${import.meta.env.BASE_URL}space.jpg`}
 					playsInline
 					muted={!shouldEnable.speaker}
 				/>
